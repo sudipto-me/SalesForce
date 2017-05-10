@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E3F2FD"
+    tools:context="app.salesforce.gnt.com.salesforce.SplashScreenActivity">
+
+    <TextView
+        android:id="@+id/tv_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome To SalesForce App"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="16dp"
+        android:textSize="25sp"
+        android:textStyle="italic"
+        android:textColor="#311B92"
+        android:fontFamily="cursive"/>
+
+    <ImageView
+        android:id = "@+id/iv_splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/salesforcelogo"
+        android:layout_below="@id/tv_welcome"
+        android:layout_margin="16dp"
+        />
+
+
+
+</RelativeLayout>
