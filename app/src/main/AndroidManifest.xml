@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="app.salesforce.gnt.com.salesforce">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,8 +21,11 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
-        <activity android:name=".LocationActivity"></activity>
+            android:label="@string/app_name" />
+        <activity android:name=".LocationActivity" />
+        <activity android:name=".ShopActivity" />
+        <activity android:name=".DatabaseActivity" />
+        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>

@@ -10,12 +10,32 @@
         android:id="@+id/cv_location_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp">
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id = "@+id/iv_location_logo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src = "@drawable/location"/>
+
+            <TextView
+                android:id="@+id/tv_location_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="20sp"
+                android:layout_margin="16dp"
+                android:gravity="center" />
+
+
 
             <TextView
                 android:id="@+id/tv_location_name"
@@ -23,7 +43,11 @@
                 android:layout_height="wrap_content"
                 android:text="LocationName:"
                 android:textSize="25sp"
-                android:layout_margin="16dp"/>
+                android:layout_margin="16dp"
+                android:gravity="center" />
+
+
+
 
         </LinearLayout>
 

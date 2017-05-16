@@ -6,35 +6,34 @@ package app.salesforce.gnt.com.salesforce;
 
 public class Location {
 
-    public int location_id;
-    public String location_name;
+    public int id;
+    public String name;
+    //public String location_name;
 
     public Location(){
 
     }
 
-    public Location(int location_id,String location_name){
-        this.location_id = location_id;
-        this.location_name = location_name;
+
+
+    public Location(int id,String name){
+       this.id = id;
+        this.name  = name;
     }
 
-    public Location(String location_name){
-        this.location_name = location_name;
+    public int getId() {
+        return id;
     }
 
-    public int getLocation_id() {
-        return location_id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setLocation_id(int location_id) {
-        this.location_id = location_id;
+    public String getName() {
+        return name;
     }
 
-    public String getLocation_name() {
-        return location_name;
-    }
-
-    public void setLocation_name(String location_name) {
-        this.location_name = location_name;
+    public void setName(String name) {
+        this.name = name;
     }
 }

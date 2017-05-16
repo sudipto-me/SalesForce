@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="app.salesforce.gnt.com.salesforce.ShopActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/et_node_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter node number"
+        android:layout_margin="16dp"
+        android:inputType="number"
+        android:ems="10"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif"
+        />
+
+    <EditText
+        android:id="@+id/et_shop_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter shop name"
+        android:inputType="text"
+        android:layout_margin="16dp"
+        android:ems="10"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-smallcaps"/>
+
+    <Button
+        android:id="@+id/btn_add_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="Add shop to the list"
+        android:textSize="20sp"
+        android:background="#CFD8DC"/>
+
+
+
+
+</LinearLayout>

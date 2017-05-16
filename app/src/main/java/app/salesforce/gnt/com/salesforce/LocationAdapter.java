@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.ViewH
 
     Context context;
     public List<Location>mlocationList;
+    private ItemClickListener clickListener;
+
 
 
     public LocationAdapter(Context context,List<Location>mlocationList){
@@ -33,26 +36,57 @@ public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.ViewH
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position)  {
 
         Location location = mlocationList.get(position);
-        holder.location_name.setText(location.getLocation_name());
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void OnClick(View view, int position) {
+                Toast.makeText(context,"You clicked :"+mlocationList.get(position),Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+        //holder.location_id.setText(location.getId());
+        holder.location_name.setText(location.getName());
+
     }
 
     @Override
     public int getItemCount() {
-        return mlocationList.size();
+        if(mlocationList!=null){
+        return mlocationList.size();}
+        return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder  {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
 
 
         public TextView location_name;
+        public TextView location_id;
+        public ItemClickListener itemClickListener;
+
         public ViewHolder(View itemView) {
             super(itemView);
+
+            //location_id = (TextView)itemView.findViewById(R.id.tv_location_id);
             location_name = (TextView)itemView.findViewById(R.id.tv_location_name);
+
+            itemView.setOnClickListener(this);
         }
 
+        public void setItemClickListener(ItemClickListener itemClickListener){
+            this.itemClickListener = itemClickListener;
+        }
+
+
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.OnClick(view,getAdapterPosition());
+        }
     }
 }
 

@@ -1,15 +1,38 @@
 package app.salesforce.gnt.com.salesforce;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteAbortException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ButtonBarLayout;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,62 +42,17 @@ public class MainActivity extends AppCompatActivity {
     Button
     TextView
      */
-    EditText et_email,et_passWord;
-    Button btn_signIn,btn_forgetPassword;
 
-    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        context = this;
-
-        et_email = (EditText)findViewById(R.id.et_enter_email);
-        et_passWord = (EditText)findViewById(R.id.et_enter_password);
-        btn_signIn = (Button)findViewById(R.id.btn_sign_in);
-        btn_forgetPassword = (Button) findViewById(R.id.btn_forget_password);
+        Intent i = new Intent(MainActivity.this,LoginActivity.class);
+        startActivity(i);
 
 
-        btn_signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if(et_email.getText().toString().equals("admin")&& et_passWord.getText().toString().equals("admin")){
-
-                    Toast.makeText(MainActivity.this,"You are logged in",Toast.LENGTH_SHORT).show();
-
-
-                }
-                else if(et_email.getText().toString().isEmpty()&& et_passWord.getText().toString().isEmpty())
-                    Toast.makeText(MainActivity.this,"Please enter valid information",Toast.LENGTH_SHORT).show();
-
-                else if ((et_email.getText().toString().equals("admin")
-                        &&et_passWord.getText().toString().isEmpty())&&
-                (et_email.getText().toString().isEmpty()
-                        &&et_passWord.getText().toString().isEmpty()))
-
-                    Toast.makeText(MainActivity.this,"Information incorrect",Toast.LENGTH_SHORT).show();
-
-                else {
-                    // Toast.makeText(MainActivity.this,"Please enter valid information",Toast.LENGTH_SHORT).show();
-
-
-                }
-
-            }
-
-        });
-
-        btn_forgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(MainActivity.this,"You need to wait for email",Toast.LENGTH_LONG).show();
-
-                Intent i = new Intent(context, LocationActivity.class);
-                startActivity(i);
-            }
-        });
     }
 }
