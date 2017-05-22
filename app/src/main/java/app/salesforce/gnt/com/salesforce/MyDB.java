@@ -2,22 +2,15 @@ package app.salesforce.gnt.com.salesforce;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.net.Uri;
-import android.provider.SyncStateContract;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by PC-05 on 5/10/2017.
  */
 
-public class DBHelper extends SQLiteOpenHelper {
+public class MyDB extends SQLiteOpenHelper {
 
     //SqliteDatabase name
 
@@ -25,34 +18,38 @@ public class DBHelper extends SQLiteOpenHelper {
     //database version
     private static final int DATABASE_VERSION = 1;
     //database name
-    private static final String DATABASE_NAME = "userdatabase";
+    private static final String DATABASE_NAME = "Inforce.db";
     //table name
     private static final String TABLE_NAME = "employee";
     //columns name
-    private static final String COLUMN_ID = "id";
+    private static final String COLOUMN_ONE = "id";
+    private static final String COLOUMN_TWO = "value";
+
     //table query
-    private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + "( " +
-            COLUMN_ID + "STRING" + ");";
+    private static final String SQL_CREATE_ENTRIES =
+            "CREATE TABLE "+TABLE_NAME+" (" +
+                    COLOUMN_ONE + " INTEGER PRIMARY KEY," +
+                    COLOUMN_TWO + " TEXT)";
+
+    private static final String SQL_DELETE_ENTRIES =
+            "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
-
-
-    public DBHelper(Context context) {
+    public MyDB(Context context) {
 
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TABLE_CREATE);
-        Cursor cursor = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '"+TABLE_NAME+"'",null);
-        Log.d("Checking:",cursor.toString());
+        db.execSQL(SQL_CREATE_ENTRIES);
+
         }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
 
     }
@@ -65,80 +62,43 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
     //adding single employee id to the database
-    public void addEmployee(Employee employee) {
+    public void insertData(String value) {
 
-        SQLiteDatabase mydb = this.getWritableDatabase();
-        mydb.beginTransaction();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        // Create a new map of values, where column names are the keys
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_ID, employee.getId());
-        mydb.insert(TABLE_NAME,null,contentValues);
-        mydb.setTransactionSuccessful();
-        mydb.endTransaction();
-        mydb.close();
+        contentValues.put(COLOUMN_ONE,1);
+        contentValues.put(COLOUMN_TWO,value);
 
-
-
-
+        // Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insert(TABLE_NAME, null, contentValues);
 
     }
 
     //getting single employee id from the database
+    public Cursor getData(){
+        SQLiteDatabase db = this.getReadableDatabase();
 
-    public Employee getEmployee(int id) {
+        // Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                COLOUMN_ONE,
+                COLOUMN_TWO
+        };
 
-        SQLiteDatabase mydb = this.getReadableDatabase();
-
-
-        Cursor cursor =  mydb.query(TABLE_NAME, new String[] { COLUMN_ID
-                        }, COLUMN_ID+ "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        Employee employee = new Employee(Integer.parseInt(cursor.getString(0)));
-        //return employee
-        return employee;
-
-
+        Cursor cursor =  db.query(
+                TABLE_NAME,   //The table to query
+                projection,   //The columns to return
+                null,//selecction      //The columns for the WHERE CLAUSE
+                null,//selectionARGS   //The columns for the WHERE CLAUSE
+                null,                  //don't group the row
+                null,                  //don't filter the row group
+                null                   //The sort order
+        );
+        return cursor;
     }
 
-    public List<Employee>getAllId(){
-
-    List<Employee> employeeList = new ArrayList<Employee>();
-    // Select All Query
-    String selectQuery = "SELECT  * FROM " + TABLE_NAME;
-
-    SQLiteDatabase db = this.getWritableDatabase();
-    Cursor cursor = db.rawQuery(selectQuery, null);
-
-    // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-        do {
-            Employee employee = new Employee();
-            employee.setId(cursor.getString(1));
-
-            // Adding contact to list
-            employeeList.add(employee);
-        } while (cursor.moveToNext());
-    }
-
-    // return contact list
-        return employeeList;
-}
-
-    /*
-    public static boolean CheckIsDataAlreadyInDBorNot(String TableName,
-                                                      String dbfield, String fieldValue) {
-        SQLiteDatabase sqldb = MainActivity.S
-        String Query = "Select * from " + TableName + " where " + dbfield + " = " + fieldValue;
-        Cursor cursor = sqldb.rawQuery(Query, null);
-        if(cursor.getCount() <= 0){
-            cursor.close();
-            return false;
-        }
-        cursor.close();
-        return true;
-    }
-
-     */
 
 }

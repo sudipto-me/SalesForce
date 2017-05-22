@@ -1,7 +1,6 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,98 +22,65 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class LocationActivity extends AppCompatActivity {
-
-    RecyclerView recyclerView;
-    LocationAdapter myAdapter;
-    EditText et_location;
-    Button btn_syncData;
-
-    ConnectionDetector cd;
-    String s;
-
-
-
-
-
-    //String location;
-    ArrayList<Location> locations = new ArrayList<>();
+public class OrderActivity extends AppCompatActivity {
     Context context;
-    public static final String KEY_ID = "id";
-    public static final String KEY_NAME = "name";
+    Button btn_newOrder,btn_currentOrder,btn_deleteOrder;
+    RecyclerView recyclerView;
+    OrderAdapter myAdapter;
+    ArrayList<Product>products = new ArrayList<>();
+
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location);
-
-        context = this;
-
-
-
+        setContentView(R.layout.activity_order);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btn_syncData = (Button)findViewById(R.id.btn_sync_data);
-        cd = new ConnectionDetector(this);
-
-
-
-
-        recyclerView = (RecyclerView)findViewById(R.id.rv_location_name);
-
-         s = getIntent().getStringExtra("userid");
-
-      // Toast.makeText(context,"User id is:"+s,Toast.LENGTH_SHORT).show();
+        btn_newOrder = (Button)findViewById(R.id.btn_new_order);
+        btn_currentOrder = (Button)findViewById(R.id.btn_current_order);
+        btn_deleteOrder = (Button)findViewById(R.id.btn_delete_order);
+        recyclerView = (RecyclerView)findViewById(R.id.rv_product_list);
 
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        btn_newOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(OrderActivity.this,"Enter new order",Toast.LENGTH_SHORT).show();
+            }
+        });
+        btn_currentOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(OrderActivity.this,"Show current Order",Toast.LENGTH_SHORT).show();
+            }
+        });
+        btn_deleteOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(OrderActivity.this,"Delete Order",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        myAdapter = new LocationAdapter(LocationActivity.this,locations);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        myAdapter = new OrderAdapter(OrderActivity.this,products);
         recyclerView.setAdapter(myAdapter);
-        sendRequestforLocation();
-
-        btn_syncData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                locations.clear();
-                sendRequestforLocation();
-                myAdapter.notifyDataSetChanged();
-
-
-            }
-        });
-
-
-         recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(context,OutletActivity.class);
-                //myIntent.putExtra("UserID",s);
-                //myIntent.putExtra("LocaionID",location.getId());
-                startActivity(myIntent);
-            }
-        });
-
-
-
-
+        sendRequestforProducts();
+        myAdapter.notifyDataSetChanged();
     }
 
 
-
-    public void sendRequestforLocation(){
+    public void sendRequestforProducts(){
         RequestQueue queue = Volley.newRequestQueue(context);
-        String location_url = "http://inbackoffice.com/app/inforce/location.php";
+        String product_url = "http://inbackoffice.com/app/inforce/location.php";
 
-        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST,location_url,
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST,product_url,
                 new Response.Listener<String>() {
 
                     @Override
@@ -135,15 +100,15 @@ public class LocationActivity extends AppCompatActivity {
                             for (int i = 0; i<jsonArray.length();i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                Location location = new Location();
+                               Product product = new Product();
 
                                 if (!jsonObject.isNull("id")){
-                                    location.id = jsonObject.getInt("id");
+                                    product.id = jsonObject.getInt("id");
                                 }
                                 if (!jsonObject.isNull("name")) {
-                                    location.name = jsonObject.getString("name");
+                                    product.name = jsonObject.getString("name");
                                 }
-                                locations.add(i, location);
+                                products.add(i, product);
                                 myAdapter.notifyDataSetChanged();
                             }
 
@@ -156,7 +121,7 @@ public class LocationActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LocationActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,16 +130,9 @@ public class LocationActivity extends AppCompatActivity {
         queue.add(jsonArrayRequest);
 
 
+
     }
 
 
 }
-
-
-
-
-
-
-
-
 

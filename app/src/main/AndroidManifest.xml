@@ -22,10 +22,23 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".LocationActivity" />
+        <activity
+            android:name=".LocationActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Location"/>
         <activity android:name=".ShopActivity" />
         <activity android:name=".DatabaseActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="LogIn"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".OutletActivity"
+            android:label="Outlet"
+            android:parentActivityName=".LocationActivity" />
+        <activity android:name=".OrderActivity"
+            android:label="Order"
+            android:parentActivityName=".OutletActivity"/>
     </application>
 
 </manifest>

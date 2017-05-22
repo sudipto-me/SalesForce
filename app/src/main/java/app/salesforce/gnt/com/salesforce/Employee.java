@@ -6,34 +6,31 @@ package app.salesforce.gnt.com.salesforce;
 
 public class Employee {
 
-    public String id;
+    public int id;
+
+    public String value;
 
 
     public Employee(){}
 
-
-
-    public Employee(int i) {
-
-        this.id = String.valueOf(i);
-
-    }
-
-    public Employee(String id){
+    public Employee(int id, String value) {
         this.id = id;
+        this.value = value;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String toString(){
-        return  "Employee id:"+getId();
+    public String getValue() {
+        return value;
     }
 
-
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

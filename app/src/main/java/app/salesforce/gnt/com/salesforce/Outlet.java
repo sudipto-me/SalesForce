@@ -5,4 +5,41 @@ package app.salesforce.gnt.com.salesforce;
  */
 
 public class Outlet {
+
+    public int id;
+
+
+    public String outletname;
+    //public DateFormat dateFormat;
+
+    public Outlet(){
+
+    }
+
+    public Outlet(int id,String outletname){
+
+        this.id = id;
+
+        this.outletname = outletname;
+
+    }
+
+    public int  getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getOutletname() {
+        return outletname;
+    }
+
+    public void setOutletname(String outletname) {
+        this.outletname = outletname;
+    }
+
+
+
 }
