@@ -10,15 +10,14 @@ public class Location {
     public String name;
     //public String location_name;
 
-    public Location(){
+    public Location() {
 
     }
 
 
-
-    public Location(int id,String name){
-       this.id = id;
-        this.name  = name;
+    public Location(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {

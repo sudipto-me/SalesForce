@@ -1,6 +1,7 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,10 +25,15 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
     Context context;
-    Button btn_newOrder,btn_currentOrder,btn_deleteOrder;
+    Button btn_newOrder, btn_currentOrder, btn_deleteOrder,btn_showCart;
     RecyclerView recyclerView;
     OrderAdapter myAdapter;
-    ArrayList<Product>products = new ArrayList<>();
+    ArrayList<Product> products = new ArrayList<>();
+
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+
+    ProductDB mydb;
 
 
     @Override
@@ -36,10 +42,16 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btn_newOrder = (Button)findViewById(R.id.btn_new_order);
-        btn_currentOrder = (Button)findViewById(R.id.btn_current_order);
-        btn_deleteOrder = (Button)findViewById(R.id.btn_delete_order);
-        recyclerView = (RecyclerView)findViewById(R.id.rv_product_list);
+        context = this;
+
+        btn_newOrder = (Button) findViewById(R.id.btn_new_order);
+        btn_currentOrder = (Button) findViewById(R.id.btn_current_order);
+        btn_deleteOrder = (Button) findViewById(R.id.btn_delete_order);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
+        btn_showCart = (Button)findViewById(R.id.btn_show_cart);
+
+        mydb = new ProductDB(this);
+
 
     }
 
@@ -49,19 +61,20 @@ public class OrderActivity extends AppCompatActivity {
         btn_newOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(OrderActivity.this,"Enter new order",Toast.LENGTH_SHORT).show();
+
+                sendRequestforProducts();
             }
         });
         btn_currentOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(OrderActivity.this,"Show current Order",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this, "Show current Order", Toast.LENGTH_SHORT).show();
             }
         });
         btn_deleteOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(OrderActivity.this,"Delete Order",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this, "Delete Order", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -69,41 +82,62 @@ public class OrderActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        myAdapter = new OrderAdapter(OrderActivity.this,products);
+        myAdapter = new OrderAdapter(OrderActivity.this, products);
         recyclerView.setAdapter(myAdapter);
-        sendRequestforProducts();
+
         myAdapter.notifyDataSetChanged();
+
+        btn_showCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mydb.getProducts();
+                Toast.makeText(context,"You selected: "+mydb.getProducts(),Toast.LENGTH_SHORT).show();
+                Intent showcart = new Intent(context,CartActivity.class);
+                startActivity(showcart);
+            }
+        });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    public void sendRequestforProducts(){
+
+
+
+        mydb.getProducts();
+    }
+
+    public void sendRequestforProducts() {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String product_url = "http://inbackoffice.com/app/inforce/location.php";
+        String product_url = "http://inbackoffice.com/app/inforce/product.php";
 
-        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST,product_url,
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, product_url,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Result",response.toString());
+                        Log.d("Result", response.toString());
                         try {
                             JSONObject jobj = new JSONObject(response);
                             int res = jobj.getInt("success");
 
-                            if(res == 0){
+                            if (res == 0) {
                                 return;
                             }
 
-
                             String msg = jobj.getString("message");
-                            JSONArray jsonArray = jobj.getJSONArray("location");
-                            for (int i = 0; i<jsonArray.length();i++) {
+                            JSONArray jsonArray = jobj.getJSONArray("product");
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                               Product product = new Product();
+                                Product product = new Product();
 
-                                if (!jsonObject.isNull("id")){
+                                if (!jsonObject.isNull("id")) {
                                     product.id = jsonObject.getInt("id");
+
+                                    mydb.insertProduct(product.id);
+
                                 }
                                 if (!jsonObject.isNull("name")) {
                                     product.name = jsonObject.getString("name");
@@ -121,14 +155,12 @@ public class OrderActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
 
-
         queue.add(jsonArrayRequest);
-
 
 
     }

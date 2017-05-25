@@ -30,14 +30,8 @@ public class LocationActivity extends AppCompatActivity {
     LocationAdapter myAdapter;
     EditText et_location;
     Button btn_syncData;
-
     ConnectionDetector cd;
     String s;
-
-
-
-
-
     //String location;
     ArrayList<Location> locations = new ArrayList<>();
     Context context;
@@ -48,24 +42,25 @@ public class LocationActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        setTitle("Location");
+
+
 
         context = this;
 
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btn_syncData = (Button)findViewById(R.id.btn_sync_data);
+
+        btn_syncData = (Button) findViewById(R.id.btn_sync_data);
         cd = new ConnectionDetector(this);
 
 
+        recyclerView = (RecyclerView) findViewById(R.id.rv_location_name);
 
+        s = getIntent().getStringExtra("userid");
 
-        recyclerView = (RecyclerView)findViewById(R.id.rv_location_name);
-
-         s = getIntent().getStringExtra("userid");
-
-      // Toast.makeText(context,"User id is:"+s,Toast.LENGTH_SHORT).show();
+        // Toast.makeText(context,"User id is:"+s,Toast.LENGTH_SHORT).show();
 
     }
 
@@ -75,11 +70,12 @@ public class LocationActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        myAdapter = new LocationAdapter(LocationActivity.this,locations);
-        recyclerView.setAdapter(myAdapter);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
         sendRequestforLocation();
+
+
 
         btn_syncData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,10 +90,11 @@ public class LocationActivity extends AppCompatActivity {
         });
 
 
-         recyclerView.setOnClickListener(new View.OnClickListener() {
+        recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(context,OutletActivity.class);
+                
+                Intent myIntent = new Intent(context, OutletActivity.class);
                 //myIntent.putExtra("UserID",s);
                 //myIntent.putExtra("LocaionID",location.getId());
                 startActivity(myIntent);
@@ -105,61 +102,71 @@ public class LocationActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locations.clear();
+    }
 
-
-    public void sendRequestforLocation(){
+    public void sendRequestforLocation() {
         RequestQueue queue = Volley.newRequestQueue(context);
         String location_url = "http://inbackoffice.com/app/inforce/location.php";
 
-        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST,location_url,
+        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, location_url,
                 new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Result",response.toString());
+                        Log.d("Result", response.toString());
                         try {
                             JSONObject jobj = new JSONObject(response);
                             int res = jobj.getInt("success");
 
-                            if(res == 0){
+                            if (res == 0) {
                                 return;
                             }
 
 
                             String msg = jobj.getString("message");
                             JSONArray jsonArray = jobj.getJSONArray("location");
-                            for (int i = 0; i<jsonArray.length();i++) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                                 Location location = new Location();
 
-                                if (!jsonObject.isNull("id")){
+                                if (!jsonObject.isNull("id")) {
                                     location.id = jsonObject.getInt("id");
                                 }
                                 if (!jsonObject.isNull("name")) {
                                     location.name = jsonObject.getString("name");
                                 }
                                 locations.add(i, location);
-                                myAdapter.notifyDataSetChanged();
+
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
+                        myAdapter = new LocationAdapter(LocationActivity.this, locations);
+                        recyclerView.setAdapter(myAdapter);
+
+
+                        myAdapter.notifyDataSetChanged();
+
+
+
+
                     }
 
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LocationActivity.this,error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(LocationActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         queue.add(jsonArrayRequest);

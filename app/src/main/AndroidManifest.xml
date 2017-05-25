@@ -24,8 +24,8 @@
             android:label="@string/app_name" />
         <activity
             android:name=".LocationActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="Location"/>
+            android:label="Location"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".ShopActivity" />
         <activity android:name=".DatabaseActivity" />
         <activity
@@ -36,9 +36,11 @@
             android:name=".OutletActivity"
             android:label="Outlet"
             android:parentActivityName=".LocationActivity" />
-        <activity android:name=".OrderActivity"
+        <activity
+            android:name=".OrderActivity"
             android:label="Order"
-            android:parentActivityName=".OutletActivity"/>
+            android:parentActivityName=".OutletActivity" />
+        <activity android:name=".CartActivity"></activity>
     </application>
 
 </manifest>

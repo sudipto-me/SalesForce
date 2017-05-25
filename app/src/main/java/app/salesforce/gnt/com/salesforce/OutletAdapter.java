@@ -16,22 +16,21 @@ import java.util.List;
  * Created by PC-05 on 5/21/2017.
  */
 
-public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder>  {
+public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder> {
 
     Context context;
     public List<Outlet> moutletList;
     private ItemClickListener itemClickListener;
 
-    public OutletAdapter(Context context,List<Outlet> moutletList)
-    {
+    public OutletAdapter(Context context, List<Outlet> moutletList) {
         this.context = context;
         this.moutletList = moutletList;
-        Log.d("Adapetr Size",""+this.moutletList.size());
+        Log.d("Adapetr Size", "" + this.moutletList.size());
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.outletview,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.outletview, parent, false);
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }
@@ -44,27 +43,26 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
-                Toast.makeText(context,"You clicked:"+outlet.getId(),Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context,OrderActivity.class));
+                Toast.makeText(context, "You clicked:" + outlet.getId(), Toast.LENGTH_SHORT).show();
+                context.startActivity(new Intent(context, OrderActivity.class));
             }
         });
 
 
-
-      // holder.outlet_id.setText(outlet.getId());
+        // holder.outlet_id.setText(outlet.getId());
         holder.outlet_Name.setText(outlet.getOutletname());
 
     }
 
     @Override
     public int getItemCount() {
-        Log.d("Adapetr Size",""+moutletList.size());
+        Log.d("Adapetr Size", "" + moutletList.size());
         return moutletList.size();
 
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
 
         public TextView outlet_Name;
@@ -72,13 +70,12 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
         public ItemClickListener itemClickListener;
 
 
-
         public ViewHolder(View itemView) {
             super(itemView);
 
             //outlet_id = (TextView)itemView.findViewById(R.id.tv_id);
 
-            outlet_Name = (TextView)itemView.findViewById(R.id.tv_outlet_name);
+            outlet_Name = (TextView) itemView.findViewById(R.id.tv_outlet_name);
 
             itemView.setOnClickListener(this);
         }

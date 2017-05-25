@@ -43,8 +43,6 @@ public class OutletActivity extends AppCompatActivity {
     private String name;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +53,7 @@ public class OutletActivity extends AppCompatActivity {
 
         context = this;
 
-        recyclerView = (RecyclerView)findViewById(R.id.rv_outlet_name);
-
-
+        recyclerView = (RecyclerView) findViewById(R.id.rv_outlet_name);
 
 
         userid = getIntent().getStringExtra("UserID");
@@ -97,7 +93,7 @@ public class OutletActivity extends AppCompatActivity {
 
     }
 
-    public void sendRequestForOutlet(){
+    public void sendRequestForOutlet() {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String outlet_url = "http://inbackoffice.com/app/inforce/outlet.php";
@@ -107,35 +103,35 @@ public class OutletActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.d("Result",response.toString());
-                        Toast.makeText(context,"Response"+response,Toast.LENGTH_SHORT).show();
+                        Log.d("Result", response.toString());
+                        Toast.makeText(context, "Response" + response, Toast.LENGTH_SHORT).show();
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int res = jsonObject.getInt("success");
-                            if(res ==0)
+                            if (res == 0)
                                 return;
 
 
                             String message = jsonObject.getString("message");
                             JSONArray jsonArray = jsonObject.getJSONArray("outlets");
-                            for(int i=0;i<jsonArray.length();i++){
+                            for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject jobj = jsonArray.getJSONObject(i);
 
                                 Outlet outlet = new Outlet();
 
 
-                                if(!jobj.isNull("id")){
+                                if (!jobj.isNull("id")) {
 
                                     outlet.id = jobj.getInt("id");
                                 }
 
-                                if(!jobj.isNull("o_name")){
+                                if (!jobj.isNull("o_name")) {
                                     outlet.outletname = jobj.getString("o_name");
-                                    Log.e("Outlet","Name "+outlet.outletname);
+                                    Log.e("Outlet", "Name " + outlet.outletname);
                                 }
-                                mOutletList.add(i,outlet);
+                                mOutletList.add(i, outlet);
 
 
                             }
@@ -143,7 +139,7 @@ public class OutletActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        myOutletAdapter = new OutletAdapter(OutletActivity.this,mOutletList);
+                        myOutletAdapter = new OutletAdapter(OutletActivity.this, mOutletList);
                         recyclerView.setAdapter(myOutletAdapter);
                         myOutletAdapter.notifyDataSetChanged();
 
@@ -152,16 +148,16 @@ public class OutletActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context,error.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
 
-        @Override
-            protected Map<String, String> getParams()  {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put(KEY_USER_ID,"1");
-                params.put(KEY_LOCATION_ID,"4");
-                Log.d("Params",params.toString());
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(KEY_USER_ID, "1");
+                params.put(KEY_LOCATION_ID, "4");
+                Log.d("Params", params.toString());
                 return params;
             }
         };

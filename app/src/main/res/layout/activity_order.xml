@@ -4,91 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation = "vertical"
+    android:orientation="vertical"
     tools:context="app.salesforce.gnt.com.salesforce.OrderActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
+        android:layout_margin="16dp"
         android:background="@drawable/border">
 
         <ImageView
-            android:id = "@+id/iv_plus"
+            android:id="@+id/iv_plus"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src  = "@drawable/plus"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="8dp"
-            />
+            android:layout_marginTop="8dp"
+            android:src="@drawable/plus" />
 
         <Button
             android:id="@+id/btn_new_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_gravity="center"
-            android:layout_below="@id/iv_plus"
-            android:text="New Order"
             android:background="@android:color/transparent"
-            />
+            android:text="New Order"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
         <ImageView
-            android:id = "@+id/iv_current"
+            android:id="@+id/iv_current"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src  = "@drawable/ok"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
-            />
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ok" />
 
         <Button
             android:id="@+id/btn_current_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Current Order"
-            android:layout_marginLeft="16dp"
             android:background="@android:color/transparent"
-            android:layout_alignBaseline="@+id/btn_new_order"
-            android:layout_alignBottom="@+id/btn_new_order"
+            android:text="Current Order"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
 
         <ImageView
-            android:id = "@+id/iv_delete"
+            android:id="@+id/iv_delete"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:src  = "@drawable/delete"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
-            />
+            android:layout_marginTop="8dp"
+            android:src="@drawable/delete" />
 
         <Button
             android:id="@+id/btn_delete_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete Order"
             android:background="@android:color/transparent"
-            android:layout_below="@id/iv_delete"
-           android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"/>
-
+            android:text="Delete Order"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id = "@+id/rv_product_list"
+        android:id="@+id/rv_product_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:scrollbars="vertical"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight = "5"
+        android:scrollbars="vertical" />
+
+    <Button
+        android:id="@+id/btn_show_cart"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Show Cart"
+        android:layout_margin="16dp"
+        app:theme="@style/AppTheme.RoundedCornerMaterialButton"
+        android:background="#4CAF50"
+        />
 
 
 </LinearLayout>

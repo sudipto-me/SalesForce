@@ -56,8 +56,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
 
-
-
         context = this;
 
         builder = new AlertDialog.Builder(LoginActivity.this);
@@ -89,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         db = new MyDB(this);
         Cursor cursor = db.getData();
         if (cursor.moveToFirst()) {
-            Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
+            //Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
 
 
             startActivity(new Intent(LoginActivity.this, LocationActivity.class));
@@ -120,23 +118,15 @@ public class LoginActivity extends AppCompatActivity {
                                     String msg = jobj.getString("message");
                                     JSONArray jsonArray = jobj.getJSONArray("user");
                                     JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                    id = jsonObject.getString("id");
+                                    String id = jsonObject.getString("id");
                                     String name = jsonObject.getString("name");
                                     String dob = jsonObject.getString("dob");
                                     String des = jsonObject.getString("des");
                                     db.insertData(id);
-                                    Log.d("Data",db.toString());
+                                    Log.d("Data", db.toString());
 
                                     //id added to database
                                     Toast.makeText(LoginActivity.this, "result: id" + id + " name: " + name + " dob:" + dob + " des:" + des, Toast.LENGTH_LONG).show();
-
-                                    Intent intent = new Intent(context,LocationActivity.class);
-                                   intent.putExtra("userid",id);
-                                    startActivity(intent);
-
-
-
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -152,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                         Map<String, String> params = new HashMap<String, String>();
                         params.put(KEY_NAME, number);
                         params.put(KEY_PASS, passWord);
-                        Log.d("Params",params.toString());
+                        Log.d("Params", params.toString());
                         return params;
 
                     }
@@ -168,10 +158,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    }
+}
 
 
 

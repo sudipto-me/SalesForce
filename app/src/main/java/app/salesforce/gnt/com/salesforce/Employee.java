@@ -11,7 +11,8 @@ public class Employee {
     public String value;
 
 
-    public Employee(){}
+    public Employee() {
+    }
 
     public Employee(int id, String value) {
         this.id = id;

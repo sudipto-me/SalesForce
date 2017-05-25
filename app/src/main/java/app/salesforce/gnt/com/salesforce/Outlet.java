@@ -12,11 +12,11 @@ public class Outlet {
     public String outletname;
     //public DateFormat dateFormat;
 
-    public Outlet(){
+    public Outlet() {
 
     }
 
-    public Outlet(int id,String outletname){
+    public Outlet(int id, String outletname) {
 
         this.id = id;
 
@@ -24,7 +24,7 @@ public class Outlet {
 
     }
 
-    public int  getId() {
+    public int getId() {
         return id;
     }
 
@@ -39,7 +39,6 @@ public class Outlet {
     public void setOutletname(String outletname) {
         this.outletname = outletname;
     }
-
 
 
 }

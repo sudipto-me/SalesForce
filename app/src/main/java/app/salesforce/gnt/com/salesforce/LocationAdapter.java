@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +17,11 @@ import java.util.List;
  * Created by PC-05 on 5/10/2017.
  */
 
-public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.ViewHolder> {
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
-    Context context ;
+    Context context;
     public List<Location> mlocationList;
     private ItemClickListener clickListener;
-
-
 
 
     public LocationAdapter(Context context, List<Location> mlocationList) {
@@ -30,7 +29,7 @@ public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.ViewH
         this.mlocationList = mlocationList;
     }
 
-    public void swap(ArrayList<Location>locationList){
+    public void swap(ArrayList<Location> locationList) {
 
         mlocationList.clear();
         mlocationList.addAll(locationList);
@@ -49,14 +48,12 @@ public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.ViewH
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-
         final Location location = mlocationList.get(position);
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
                 Toast.makeText(context, "You clicked :" + location.getId(), Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context,OutletActivity.class));
-
+                context.startActivity(new Intent(context, OutletActivity.class));
 
 
             }
@@ -82,6 +79,10 @@ public class LocationAdapter extends RecyclerView.Adapter <LocationAdapter.ViewH
         public TextView location_name;
         public TextView location_id;
         public ItemClickListener itemClickListener;
+        public Button btn_increment;
+        public TextView tv_productquantity;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
