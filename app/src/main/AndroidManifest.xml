@@ -26,8 +26,6 @@
             android:name=".LocationActivity"
             android:label="Location"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".ShopActivity" />
-        <activity android:name=".DatabaseActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="LogIn"

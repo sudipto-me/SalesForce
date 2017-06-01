@@ -56,8 +56,7 @@ public class OutletActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_outlet_name);
 
 
-        userid = getIntent().getStringExtra("UserID");
-        locationid = getIntent().getStringExtra("LocaionID");
+
 
     }
 
@@ -70,17 +69,6 @@ public class OutletActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mlinearLayoutManager);
         mlinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         sendRequestForOutlet();
-
-        /*
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myintent = new Intent(context,OrderActivity.class);
-                startActivity(myintent);
-            }
-        });
-         */
-
 
     }
 
@@ -129,8 +117,7 @@ public class OutletActivity extends AppCompatActivity {
 
                                 if (!jobj.isNull("o_name")) {
                                     outlet.outletname = jobj.getString("o_name");
-                                    Log.e("Outlet", "Name " + outlet.outletname);
-                                }
+                                     }
                                 mOutletList.add(i, outlet);
 
 

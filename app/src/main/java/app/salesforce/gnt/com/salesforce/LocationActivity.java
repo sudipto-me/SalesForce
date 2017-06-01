@@ -44,11 +44,7 @@ public class LocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_location);
         setTitle("Location");
 
-
-
         context = this;
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -57,11 +53,6 @@ public class LocationActivity extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_location_name);
-
-        s = getIntent().getStringExtra("userid");
-
-        // Toast.makeText(context,"User id is:"+s,Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -72,7 +63,6 @@ public class LocationActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
         sendRequestforLocation();
 
 
@@ -107,7 +97,7 @@ public class LocationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        locations.clear();
+
     }
 
     public void sendRequestforLocation() {
@@ -152,8 +142,6 @@ public class LocationActivity extends AppCompatActivity {
 
                         myAdapter = new LocationAdapter(LocationActivity.this, locations);
                         recyclerView.setAdapter(myAdapter);
-
-
                         myAdapter.notifyDataSetChanged();
 
 

@@ -10,7 +10,13 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by PC-05 on 5/25/2017.
  */
 
+
+
 public class ProductDB extends SQLiteOpenHelper {
+
+
+
+
 
     //database version
     private static final int DATABASE_VERSION = 1;
@@ -94,4 +100,8 @@ public class ProductDB extends SQLiteOpenHelper {
         );
         return cursor;
     }
+
+
 }
+
+

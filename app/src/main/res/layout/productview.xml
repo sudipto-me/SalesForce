@@ -53,10 +53,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:text="0"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <Button
@@ -64,7 +64,7 @@
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="16dp"
                 android:text="+"
                 android:textSize="20sp"/>

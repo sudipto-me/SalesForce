@@ -33,7 +33,7 @@ public class OrderActivity extends AppCompatActivity {
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
 
-    ProductDB mydb;
+    //ProductDB mydb;
 
 
     @Override
@@ -50,7 +50,7 @@ public class OrderActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         btn_showCart = (Button)findViewById(R.id.btn_show_cart);
 
-        mydb = new ProductDB(this);
+        //mydb = new ProductDB(this);
 
 
     }
@@ -90,8 +90,8 @@ public class OrderActivity extends AppCompatActivity {
         btn_showCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mydb.getProducts();
-                Toast.makeText(context,"You selected: "+mydb.getProducts(),Toast.LENGTH_SHORT).show();
+                //mydb.getProducts();
+                //Toast.makeText(context,"You selected: "+mydb.getProducts(),Toast.LENGTH_SHORT).show();
                 Intent showcart = new Intent(context,CartActivity.class);
                 startActivity(showcart);
             }
@@ -105,7 +105,7 @@ public class OrderActivity extends AppCompatActivity {
 
 
 
-        mydb.getProducts();
+       // mydb.getProducts();
     }
 
     public void sendRequestforProducts() {
@@ -136,7 +136,7 @@ public class OrderActivity extends AppCompatActivity {
                                 if (!jsonObject.isNull("id")) {
                                     product.id = jsonObject.getInt("id");
 
-                                    mydb.insertProduct(product.id);
+                                    //mydb.insertProduct(product.id);
 
                                 }
                                 if (!jsonObject.isNull("name")) {
