@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox cb_chekcpassword;
 
     public static final String KEY_NAME = "mob";
-    public static final String KEY_PASS = "pas";
+    public static final String KEY_PASS = "pass";
 
     public String id;
 
@@ -80,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         db = new MyDB(this);
         Cursor cursor = db.getData();
         if (cursor.moveToFirst()) {
-            //Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
 
 
             startActivity(new Intent(LoginActivity.this, LocationActivity.class));
@@ -101,62 +103,73 @@ public class LoginActivity extends AppCompatActivity {
                 number = et_email.getText().toString().trim();//phone number input
                 passWord = et_passWord.getText().toString().trim();//password input
 
-                String register_url = "http://inbackoffice.com/app/inforce/login.php";//url for the database
+                sendRequestforLogIN();
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
 
-                //post method for checking the information from the database
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, register_url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.d("Result", response.toString());
-                                try {
-                                    JSONObject jobj = new JSONObject(response);
-                                    int res = jobj.getInt("success");//chcek the success message
-                                    if (res == 0) {
-                                        return;
-                                    }
-                                    String msg = jobj.getString("message");
-                                    JSONArray jsonArray = jobj.getJSONArray("user");
-                                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                                    String id = jsonObject.getString("id");
-                                    String name = jsonObject.getString("name");
-                                    String dob = jsonObject.getString("dob");
-                                    String des = jsonObject.getString("des");
-                                    db.insertData(id);
-                                    Log.d("Data", db.toString());
+            }
+        });
+    }
 
-                                    //id added to database
-                                    Toast.makeText(LoginActivity.this, "result: id" + id + " name: " + name + " dob:" + dob + " des:" + des, Toast.LENGTH_LONG).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+    public void sendRequestforLogIN() {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        String LogInUrl = "http://inbackoffice.com/app/inforce/login.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, LogInUrl,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        findViewById(R.id.progressBar).setVisibility(View.GONE);
+                        Log.d("Response", response.toString());
+                        try {
+                            JSONObject jobj = new JSONObject(response);
+                            int res = jobj.getInt("success");
+                            if (res == 0) {
+
+                                Toast.makeText(context,"Result",Toast.LENGTH_LONG).show();
+                                return;
                             }
-                        }, new Response.ErrorListener() {
+                            Log.d("Success=1",response.toString());
+                            String msg = jobj.getString("message");
+                            JSONArray jsonArray = jobj.getJSONArray("user");
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            String id = jsonObject.getString("id");
+                            String name = jsonObject.getString("name");
+                            String dob = jsonObject.getString("dob");
+                            String des = jsonObject.getString("desig");
+                            db.insertData(id);
+                            Log.d("Data", db.toString());
+
+                           // Toast.makeText(context, "result: id" + id + " name: " + name + " dob:" + dob + " designation:" + des, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(context,LocationActivity.class);
+                            startActivity(intent);
+
+
+                        } catch (JSONException e) {
+                            Log.e("jsonexception",e.getMessage());
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
+
                     }
                 }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
 
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put(KEY_NAME, number);
-                        params.put(KEY_PASS, passWord);
-                        Log.d("Params", params.toString());
-                        return params;
-
-                    }
-
-
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-                requestQueue.add(stringRequest);
+                params.put(KEY_NAME, number);
+                params.put(KEY_PASS, passWord);
+                Log.d("Params", params.toString());
+                return params;
             }
-        });
+        };
 
+        requestQueue.add(stringRequest);
 
     }
-
 
 }
 

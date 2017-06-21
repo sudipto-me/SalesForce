@@ -25,7 +25,7 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
     public OutletAdapter(Context context, List<Outlet> moutletList) {
         this.context = context;
         this.moutletList = moutletList;
-        Log.d("Adapetr Size", "" + this.moutletList.size());
+        //Log.d("Adapetr Size", "" + this.moutletList.size());
     }
 
     @Override

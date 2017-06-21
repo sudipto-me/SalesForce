@@ -1,15 +1,20 @@
 package app.salesforce.gnt.com.salesforce;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,9 +34,11 @@ public class LocationActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     LocationAdapter myAdapter;
     EditText et_location;
-    Button btn_syncData;
+    ImageButton btn_syncData;
     ConnectionDetector cd;
     String s;
+    ProgressBar progressBar;
+    private Toolbar toolbar;
     //String location;
     ArrayList<Location> locations = new ArrayList<>();
     Context context;
@@ -45,32 +52,42 @@ public class LocationActivity extends AppCompatActivity {
         setTitle("Location");
 
         context = this;
+        // toolbar = (Toolbar)findViewById(R.id.tool_bar);
+        //toolbar.hideOverflowMenu();
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
 
-        btn_syncData = (Button) findViewById(R.id.btn_sync_data);
+        View view = getSupportActionBar().getCustomView();
+
+
+        TextView actionbar_title = (TextView) view.findViewById(R.id.textView);
+
+        btn_syncData = (ImageButton) view.findViewById(R.id.btn_sync_data);
         cd = new ConnectionDetector(this);
 
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_location_name);
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        locations.clear();
         sendRequestforLocation();
-
 
 
         btn_syncData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 locations.clear();
                 sendRequestforLocation();
                 myAdapter.notifyDataSetChanged();
@@ -83,7 +100,7 @@ public class LocationActivity extends AppCompatActivity {
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
                 Intent myIntent = new Intent(context, OutletActivity.class);
                 //myIntent.putExtra("UserID",s);
                 //myIntent.putExtra("LocaionID",location.getId());
@@ -96,6 +113,7 @@ public class LocationActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        locations.clear();
         super.onResume();
 
     }
@@ -143,10 +161,6 @@ public class LocationActivity extends AppCompatActivity {
                         myAdapter = new LocationAdapter(LocationActivity.this, locations);
                         recyclerView.setAdapter(myAdapter);
                         myAdapter.notifyDataSetChanged();
-
-
-
-
                     }
 
                 }, new Response.ErrorListener() {

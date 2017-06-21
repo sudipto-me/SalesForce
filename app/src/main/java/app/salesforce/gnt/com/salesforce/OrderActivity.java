@@ -30,8 +30,8 @@ public class OrderActivity extends AppCompatActivity {
     OrderAdapter myAdapter;
     ArrayList<Product> products = new ArrayList<>();
 
-    public static final String KEY_ID = "id";
-    public static final String KEY_NAME = "name";
+    public static final String KEY_ID = "product_id";
+    public static final String KEY_NAME = "product_name";
 
     //ProductDB mydb;
 
@@ -133,14 +133,14 @@ public class OrderActivity extends AppCompatActivity {
 
                                 Product product = new Product();
 
-                                if (!jsonObject.isNull("id")) {
-                                    product.id = jsonObject.getInt("id");
+                                if (!jsonObject.isNull("product_id")) {
+                                    product.id = jsonObject.getInt("product_id");
 
                                     //mydb.insertProduct(product.id);
 
                                 }
-                                if (!jsonObject.isNull("name")) {
-                                    product.name = jsonObject.getString("name");
+                                if (!jsonObject.isNull("product_name")) {
+                                    product.name = jsonObject.getString("product_name");
                                 }
                                 products.add(i, product);
                                 myAdapter.notifyDataSetChanged();

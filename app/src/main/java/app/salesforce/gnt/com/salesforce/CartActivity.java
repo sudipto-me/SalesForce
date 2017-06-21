@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -28,6 +31,12 @@ public class CartActivity extends AppCompatActivity {
     Button btn_proceedCart;
     ArrayList<Cart>cartArrayList = new ArrayList<>();
     Context context;
+
+    public static final String KEY_NAME = "name";
+    public static final String KEY_QUANTITY = "quantity";
+
+    private String name;
+    private String quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +78,7 @@ public class CartActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String cart_url = "http://inbackoffice.com/app/inforce/cart.php";
 
-        StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, cart_url,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, cart_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -102,6 +111,17 @@ public class CartActivity extends AppCompatActivity {
 
 
                     }
-                });
+                }){
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String,String>();
+                params.put(KEY_NAME,name);
+                params.put(KEY_QUANTITY,quantity);
+                Log.d("Params", params.toString());
+                return params;
+            }
+        };
+
+
+        requestQueue.add(stringRequest);
     }
 }

@@ -1,11 +1,13 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,11 +32,11 @@ public class OutletActivity extends AppCompatActivity {
     ArrayList<Outlet> mOutletList = new ArrayList<>();
     Context context;
 
-    public static final String KEY_USER_ID = "userid";
-    public static final String KEY_LOCATION_ID = "locationid";
+    public static final String KEY_USER_ID = "emp_id";
+    public static final String KEY_LOCATION_ID = "location_id";
 
-    public static final String KEY_ID = "o_id";
-    public static final String KEY_NAME = "o_name";
+    public static final String KEY_ID = "outlet_id";
+    public static final String KEY_NAME = "outlet_name";
 
     private String userid;
     private String locationid;
@@ -68,7 +70,16 @@ public class OutletActivity extends AppCompatActivity {
         final LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mlinearLayoutManager);
         mlinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        //mOutletList.clear();
         sendRequestForOutlet();
+
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context,OrderActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -76,7 +87,7 @@ public class OutletActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mOutletList.clear();
-        //sendRequestForOutlet();
+        sendRequestForOutlet();
 
 
     }
@@ -92,17 +103,17 @@ public class OutletActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         Log.d("Result", response.toString());
-                        Toast.makeText(context, "Response" + response, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(context, "Response" + response, Toast.LENGTH_LONG).show();
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int res = jsonObject.getInt("success");
-                            if (res == 0)
-                                return;
+                            if (res == 0){
+                                return;}
 
 
                             String message = jsonObject.getString("message");
-                            JSONArray jsonArray = jsonObject.getJSONArray("outlets");
+                            JSONArray jsonArray = jsonObject.getJSONArray("outlet_name");
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject jobj = jsonArray.getJSONObject(i);
@@ -110,13 +121,13 @@ public class OutletActivity extends AppCompatActivity {
                                 Outlet outlet = new Outlet();
 
 
-                                if (!jobj.isNull("id")) {
+                                if (!jobj.isNull("outlet_id")) {
 
-                                    outlet.id = jobj.getInt("id");
+                                    outlet.id = jobj.getInt("outlet_id");
                                 }
 
-                                if (!jobj.isNull("o_name")) {
-                                    outlet.outletname = jobj.getString("o_name");
+                                if (!jobj.isNull("outlet_name")) {
+                                    outlet.outletname = jobj.getString("outlet_name");
                                      }
                                 mOutletList.add(i, outlet);
 
@@ -143,7 +154,7 @@ public class OutletActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put(KEY_USER_ID, "1");
-                params.put(KEY_LOCATION_ID, "4");
+                params.put(KEY_LOCATION_ID, "1");
                 Log.d("Params", params.toString());
                 return params;
             }

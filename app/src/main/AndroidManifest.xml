@@ -25,11 +25,12 @@
         <activity
             android:name=".LocationActivity"
             android:label="Location"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity" >Location</activity>
         <activity
             android:name=".LoginActivity"
             android:label="LogIn"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+           />
         <activity
             android:name=".OutletActivity"
             android:label="Outlet"

@@ -17,6 +17,13 @@
         <item name="android:background">@drawable/shape</item>
     </style>
 
+    <style name="CustomTheme" parent = "Theme.AppCompat.Light.NoActionBar">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        </style>
+
 
 
 
