@@ -43,6 +43,7 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         setTitle("Cart");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
 

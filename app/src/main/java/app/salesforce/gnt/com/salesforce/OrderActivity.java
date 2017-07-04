@@ -25,13 +25,15 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
     Context context;
-    Button btn_newOrder, btn_currentOrder, btn_deleteOrder,btn_showCart;
+    Button btn_newOrder, btn_currentOrder, btn_deleteOrder, btn_showCart;
     RecyclerView recyclerView;
     OrderAdapter myAdapter;
     ArrayList<Product> products = new ArrayList<>();
 
     public static final String KEY_ID = "product_id";
     public static final String KEY_NAME = "product_name";
+    Product product;
+
 
     //ProductDB mydb;
 
@@ -44,11 +46,11 @@ public class OrderActivity extends AppCompatActivity {
 
         context = this;
 
-        btn_newOrder = (Button) findViewById(R.id.btn_new_order);
-        btn_currentOrder = (Button) findViewById(R.id.btn_current_order);
-        btn_deleteOrder = (Button) findViewById(R.id.btn_delete_order);
+        //btn_newOrder = (Button) findViewById(R.id.btn_new_order);
+        //btn_currentOrder = (Button) findViewById(R.id.btn_current_order);
+        //btn_deleteOrder = (Button) findViewById(R.id.btn_delete_order);
         recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
-        btn_showCart = (Button)findViewById(R.id.btn_show_cart);
+        btn_showCart = (Button) findViewById(R.id.btn_show_cart);
 
         //mydb = new ProductDB(this);
 
@@ -57,12 +59,16 @@ public class OrderActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        products.clear();
         super.onStart();
+
+
+        /*
         btn_newOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                sendRequestforProducts();
+
             }
         });
         btn_currentOrder.setOnClickListener(new View.OnClickListener() {
@@ -78,34 +84,43 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
+         */
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        myAdapter = new OrderAdapter(OrderActivity.this, products);
-        recyclerView.setAdapter(myAdapter);
+        sendRequestforProducts();
 
-        myAdapter.notifyDataSetChanged();
+
 
         btn_showCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mydb.getProducts();
-                //Toast.makeText(context,"You selected: "+mydb.getProducts(),Toast.LENGTH_SHORT).show();
-                Intent showcart = new Intent(context,CartActivity.class);
+                try{
+                    for(int i=0;i<products.size();i++) {
+                        Log.d("ProductsID", String.valueOf((int) product.id));
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                Intent showcart = new Intent(context, CartActivity.class);
                 startActivity(showcart);
+
+
             }
         });
     }
 
     @Override
     protected void onResume() {
+        products.clear();
         super.onResume();
 
 
-
-
-       // mydb.getProducts();
+        // mydb.getProducts();
     }
 
     public void sendRequestforProducts() {
@@ -127,28 +142,35 @@ public class OrderActivity extends AppCompatActivity {
                             }
 
                             String msg = jobj.getString("message");
-                            JSONArray jsonArray = jobj.getJSONArray("product");
+                            JSONArray jsonArray = jobj.getJSONArray("products");
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                Product product = new Product();
+                                product = new Product();
 
-                                if (!jsonObject.isNull("product_id")) {
-                                    product.id = jsonObject.getInt("product_id");
-
-                                    //mydb.insertProduct(product.id);
+                                if (!jsonObject.isNull("id")) {
+                                    product.id = jsonObject.getInt("id");
 
                                 }
-                                if (!jsonObject.isNull("product_name")) {
-                                    product.name = jsonObject.getString("product_name");
+                                if (!jsonObject.isNull("name")) {
+                                    product.name = jsonObject.getString("name");
                                 }
+
+                                if (!jsonObject.isNull("quantity")){
+                                    product.quantity = jsonObject.getString("quantity");
+                                }
+
                                 products.add(i, product);
-                                myAdapter.notifyDataSetChanged();
+
+
                             }
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        myAdapter = new OrderAdapter(OrderActivity.this, products);
+                        recyclerView.setAdapter(myAdapter);
+                        myAdapter.notifyDataSetChanged();
 
                     }
 
@@ -164,6 +186,9 @@ public class OrderActivity extends AppCompatActivity {
 
 
     }
+
+
+
 
 
 }

@@ -48,6 +48,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             }
         });
 
+        holder.tv_productid.setText(String.valueOf(product.getId()));
+
         holder.tv_productname.setText(product.getName());
 
 
@@ -60,7 +62,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
-        public TextView tv_productname;
+        public TextView tv_productname,tv_productid;
         public TextView tv_productquantity;
         public Button btn_increment;
         public Button btn_decrement;
@@ -71,6 +73,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            tv_productid = (TextView)itemView.findViewById(R.id.tv_product_id);
 
             tv_productname = (TextView) itemView.findViewById(R.id.tv_shop_name);
 
