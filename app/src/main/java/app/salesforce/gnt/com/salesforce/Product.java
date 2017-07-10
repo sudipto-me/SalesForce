@@ -8,7 +8,7 @@ public class Product {
 
     public int id;
     public String name;
-    public String quantity;
+    public int quantity;
     public String price;
 
 
@@ -16,7 +16,7 @@ public class Product {
 
     }
 
-    public Product(int id, String name, String quantity, String price) {
+    public Product(int id, String name, int quantity, String price) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -45,11 +45,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

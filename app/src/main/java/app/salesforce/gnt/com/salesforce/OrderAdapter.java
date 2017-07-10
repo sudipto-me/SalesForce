@@ -1,13 +1,17 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +25,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     Context context;
     List<Product> mProductList;
 
+    int sumValue = 0;
     public OrderAdapter(Context context, List<Product> mProductList) {
         this.context = context;
         this.mProductList = mProductList;
     }
+
+    private static OnRecyclerViewItemClickListener mListener;
+
+    // Define the listener interface
+    public interface OnRecyclerViewItemClickListener {
+        void onItemClicked(String text);
+    }
+
+    // Define the method that allows the parent activity or fragment to define the listener.
+    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mListener = listener;
+    }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,25 +53,38 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final Product product = mProductList.get(position);
 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
-               // Toast.makeText(context,"You selected:",Toast.LENGTH_SHORT).show();
+
+                sumValue+= holder.getQuantity();
+                Toast.makeText(context,holder.getQuantity()+"",Toast.LENGTH_SHORT).show();
 
 
             }
         });
 
+
+
+
         holder.tv_productid.setText(String.valueOf(product.getId()));
 
         holder.tv_productname.setText(product.getName());
 
+        holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
+        holder.tv_productquantity.invalidate();
+
 
     }
+
+    public int getSumValue(){
+        return sumValue;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -61,26 +92,40 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
-        public TextView tv_productname,tv_productid;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView tv_productname, tv_productid;
         public TextView tv_productquantity;
         public Button btn_increment;
         public Button btn_decrement;
 
         public ItemClickListener itemClickListener;
 
+
+
         int quantity = 0;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tv_productid = (TextView)itemView.findViewById(R.id.tv_product_id);
+
+            tv_productid = (TextView) itemView.findViewById(R.id.tv_product_id);
 
             tv_productname = (TextView) itemView.findViewById(R.id.tv_shop_name);
 
             btn_increment = (Button) itemView.findViewById(R.id.btn_add_to_cart);
 
             btn_decrement = (Button) itemView.findViewById(R.id.btn_delete_from_cart);
+
+            tv_productquantity = (TextView) itemView.findViewById(R.id.tv_quantity);
+
+            tv_productquantity.setOnClickListener(new View.OnClickListener()
+            {
+
+                @Override
+                public void onClick(View v) {
+                    mListener.onItemClicked((String) ((TextView)v).getText());
+                }
+            });
 
             itemView.setOnClickListener(this);
 
@@ -105,11 +150,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
                 }
             });
 
+
         }
 
         public void displayQuantity(int number) {
 
-            tv_productquantity = (TextView) itemView.findViewById(R.id.tv_quantity);
+            //tv_productquantity = (TextView) itemView.findViewById(R.id.tv_quantity);
             tv_productquantity.setText("" + number);
 
         }
@@ -121,8 +167,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         @Override
         public void onClick(View view) {
 
-            itemClickListener.OnClick(view, (int) getItemId());
-
+            Intent intent = new Intent();
+            Bundle bundle = new Bundle();
+           // bundle.putInt("Quantity", ProductList.get(getAdapterPosition()).getQuantity());
+            //view.getContext().startActivity(intent);
         }
+
+        public int getQuantity(){
+            return quantity;
+        }
+
+
     }
+
+
 }
+
+

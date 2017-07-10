@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
     Context context;
-    Button btn_newOrder, btn_currentOrder, btn_deleteOrder, btn_showCart;
+    Button btn_showCart;
     RecyclerView recyclerView;
     OrderAdapter myAdapter;
     ArrayList<Product> products = new ArrayList<>();
@@ -33,9 +33,6 @@ public class OrderActivity extends AppCompatActivity {
     public static final String KEY_ID = "product_id";
     public static final String KEY_NAME = "product_name";
     Product product;
-
-
-    //ProductDB mydb;
 
 
     @Override
@@ -46,65 +43,39 @@ public class OrderActivity extends AppCompatActivity {
 
         context = this;
 
-        //btn_newOrder = (Button) findViewById(R.id.btn_new_order);
-        //btn_currentOrder = (Button) findViewById(R.id.btn_current_order);
-        //btn_deleteOrder = (Button) findViewById(R.id.btn_delete_order);
+
         recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         btn_showCart = (Button) findViewById(R.id.btn_show_cart);
-
-        //mydb = new ProductDB(this);
 
 
     }
 
     @Override
     protected void onStart() {
-        products.clear();
         super.onStart();
-
-
-        /*
-        btn_newOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-            }
-        });
-        btn_currentOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(OrderActivity.this, "Show current Order", Toast.LENGTH_SHORT).show();
-            }
-        });
-        btn_deleteOrder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(OrderActivity.this, "Delete Order", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-         */
-
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        sendRequestforProducts();
 
+        products.clear();
+        sendRequestforProducts();
 
 
         btn_showCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                    for(int i=0;i<products.size();i++) {
-                        Log.d("ProductsID", String.valueOf((int) product.id));
-                    }
+
+
+                //Log.d("Quantity", String.valueOf(products.size()));
+                for (int i = 0; i < products.size(); i++) {
+                    Product p = products.get(i);
+                    Log.d("product ids", " = " + p.id);
                 }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
+
+                Log.d("Message",recyclerView.findViewHolderForAdapterPosition(0).toString());
+                //Log.d("Message2", String.valueOf(recyclerView.getChildAdapterPosition(v)));
+
 
                 Intent showcart = new Intent(context, CartActivity.class);
                 startActivity(showcart);
@@ -119,8 +90,6 @@ public class OrderActivity extends AppCompatActivity {
         products.clear();
         super.onResume();
 
-
-        // mydb.getProducts();
     }
 
     public void sendRequestforProducts() {
@@ -143,10 +112,12 @@ public class OrderActivity extends AppCompatActivity {
 
                             String msg = jobj.getString("message");
                             JSONArray jsonArray = jobj.getJSONArray("products");
+
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject = jsonArray.getJSONObject(i);
 
                                 product = new Product();
+
 
                                 if (!jsonObject.isNull("id")) {
                                     product.id = jsonObject.getInt("id");
@@ -156,11 +127,14 @@ public class OrderActivity extends AppCompatActivity {
                                     product.name = jsonObject.getString("name");
                                 }
 
-                                if (!jsonObject.isNull("quantity")){
-                                    product.quantity = jsonObject.getString("quantity");
+                                if (!jsonObject.isNull("quantity")) {
+                                    product.quantity = jsonObject.getInt("quantity");
                                 }
 
                                 products.add(i, product);
+
+
+                                Log.d("Message", String.valueOf(product.id));
 
 
                             }
@@ -169,6 +143,12 @@ public class OrderActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         myAdapter = new OrderAdapter(OrderActivity.this, products);
+                        myAdapter.setOnRecyclerViewItemClickListener(new OrderAdapter.OnRecyclerViewItemClickListener() {
+                            @Override
+                            public void onItemClicked(String text) {
+                                Log.d("Quantity", " = " + text);
+                            }
+                        });
                         recyclerView.setAdapter(myAdapter);
                         myAdapter.notifyDataSetChanged();
 
@@ -186,9 +166,6 @@ public class OrderActivity extends AppCompatActivity {
 
 
     }
-
-
-
 
 
 }

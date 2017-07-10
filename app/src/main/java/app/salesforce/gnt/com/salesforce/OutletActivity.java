@@ -65,12 +65,11 @@ public class OutletActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager mlinearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(mlinearLayoutManager);
         mlinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //mOutletList.clear();
+        mOutletList.clear();
         sendRequestForOutlet();
 
         recyclerView.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +86,7 @@ public class OutletActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mOutletList.clear();
-        sendRequestForOutlet();
+        //sendRequestForOutlet();
 
 
     }
