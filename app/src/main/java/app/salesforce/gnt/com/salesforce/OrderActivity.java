@@ -57,9 +57,17 @@ public class OrderActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
         products.clear();
         sendRequestforProducts();
+
+
+
+
+
+
+
+
+
 
 
         btn_showCart.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +79,28 @@ public class OrderActivity extends AppCompatActivity {
                 for (int i = 0; i < products.size(); i++) {
                     Product p = products.get(i);
                     Log.d("product ids", " = " + p.id);
+
+                   // Log.d("Child", String.valueOf(recyclerView.getChildAt(i)));
+                    //recyclerView.getChildAt(i);
+
                 }
 
                 Log.d("Message",recyclerView.findViewHolderForAdapterPosition(0).toString());
                 //Log.d("Message2", String.valueOf(recyclerView.getChildAdapterPosition(v)));
+
+               // for(int i=0;i<=myAdapter.getItemCount();i++){
+                 //   RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(i);
+                   // View view = viewHolder.itemView;
+                    //view.getId();
+
+                    //Log.d("Child",view.toString());
+                //}
+
+                //Log.d("Child", String.valueOf(recyclerView.getChildAdapterPosition(findViewById(R.id.tv_quantity))));
+
+
+
+
 
 
                 Intent showcart = new Intent(context, CartActivity.class);
@@ -84,6 +110,8 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     @Override
     protected void onResume() {
@@ -143,13 +171,17 @@ public class OrderActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         myAdapter = new OrderAdapter(OrderActivity.this, products);
-                        myAdapter.setOnRecyclerViewItemClickListener(new OrderAdapter.OnRecyclerViewItemClickListener() {
+                        /*
+                          myAdapter.setOnRecyclerViewItemClickListener(new OrderAdapter.OnRecyclerViewItemClickListener() {
                             @Override
                             public void onItemClicked(String text) {
                                 Log.d("Quantity", " = " + text);
                             }
                         });
+                         */
+
                         recyclerView.setAdapter(myAdapter);
+
                         myAdapter.notifyDataSetChanged();
 
                     }

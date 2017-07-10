@@ -123,7 +123,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
                 @Override
                 public void onClick(View v) {
-                    mListener.onItemClicked((String) ((TextView)v).getText());
+                   // Toast.makeText(context, String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -147,6 +147,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
                         quantity = 0;
                     }
                     displayQuantity(quantity);
+                    //Toast.makeText(context, String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -167,10 +168,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         @Override
         public void onClick(View view) {
 
-            Intent intent = new Intent();
-            Bundle bundle = new Bundle();
+           // Intent intent = new Intent();
+           //Bundle bundle = new Bundle();
            // bundle.putInt("Quantity", ProductList.get(getAdapterPosition()).getQuantity());
             //view.getContext().startActivity(intent);
+
+            Toast.makeText(context, String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+
         }
 
         public int getQuantity(){
