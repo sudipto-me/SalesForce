@@ -78,8 +78,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
         holder.tv_productquantity.invalidate();
 
+        holder.btn_increment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                product.quantity++;
+                holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
+            }
+        });
+        holder.btn_decrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                product.quantity--;
+                holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
+            }
+        });
 
     }
+
+
 
     public int getSumValue(){
         return sumValue;
@@ -118,45 +134,38 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
             tv_productquantity = (TextView) itemView.findViewById(R.id.tv_quantity);
 
-            tv_productquantity.setOnClickListener(new View.OnClickListener()
-            {
 
-                @Override
-                public void onClick(View v) {
-                   // Toast.makeText(context, String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-                }
-            });
 
             itemView.setOnClickListener(this);
 
-            btn_increment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    quantity++;
-
-                    displayQuantity(quantity);
-
-                }
-            });
-
-            btn_decrement.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    quantity--;
-                    if (quantity <= 0) {
-                        quantity = 0;
-                    }
-                    displayQuantity(quantity);
-                    //Toast.makeText(context, String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
-                }
-            });
+//            btn_increment.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    quantity++;
+//
+//                    displayQuantity(quantity);
+//
+//                }
+//            });
+//
+//            btn_decrement.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    quantity--;
+//                    if (quantity <= 0) {
+//                        quantity = 0;
+//                    }
+//                    displayQuantity(quantity);
+//
+//                }
+//            });
 
 
         }
 
         public void displayQuantity(int number) {
 
-            //tv_productquantity = (TextView) itemView.findViewById(R.id.tv_quantity);
+
             tv_productquantity.setText("" + number);
 
         }
@@ -168,12 +177,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         @Override
         public void onClick(View view) {
 
-           // Intent intent = new Intent();
-           //Bundle bundle = new Bundle();
-           // bundle.putInt("Quantity", ProductList.get(getAdapterPosition()).getQuantity());
-            //view.getContext().startActivity(intent);
 
-            Toast.makeText(context, String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+
+            //Toast.makeText(context, String.valueOf(getAdapterPosition())+" "+tv_productquantity.getText(), Toast.LENGTH_SHORT).show();
 
         }
 

@@ -1,10 +1,12 @@
 package app.salesforce.gnt.com.salesforce;
 
+import java.io.Serializable;
+
 /**
  * Created by PC-05 on 5/22/2017.
  */
 
-public class Product {
+public class Product implements Serializable {
 
     public int id;
     public String name;

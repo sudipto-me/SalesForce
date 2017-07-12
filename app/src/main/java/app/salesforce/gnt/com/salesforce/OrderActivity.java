@@ -3,6 +3,7 @@ package app.salesforce.gnt.com.salesforce;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +29,7 @@ public class OrderActivity extends AppCompatActivity {
     Button btn_showCart;
     RecyclerView recyclerView;
     OrderAdapter myAdapter;
-    ArrayList<Product> products = new ArrayList<>();
+    public static ArrayList<Product> products = new ArrayList<>();
 
     public static final String KEY_ID = "product_id";
     public static final String KEY_NAME = "product_name";
@@ -61,15 +62,6 @@ public class OrderActivity extends AppCompatActivity {
         sendRequestforProducts();
 
 
-
-
-
-
-
-
-
-
-
         btn_showCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,39 +70,19 @@ public class OrderActivity extends AppCompatActivity {
                 //Log.d("Quantity", String.valueOf(products.size()));
                 for (int i = 0; i < products.size(); i++) {
                     Product p = products.get(i);
-                    Log.d("product ids", " = " + p.id);
 
-                   // Log.d("Child", String.valueOf(recyclerView.getChildAt(i)));
-                    //recyclerView.getChildAt(i);
+                    Log.d("Product ids", " = " + p.id);
+                    Log.d("Products quantity", "=" + p.quantity);
+
+                    Intent cartIntent = new Intent(context, CartActivity.class);
+                    startActivity(cartIntent);
 
                 }
-
-                Log.d("Message",recyclerView.findViewHolderForAdapterPosition(0).toString());
-                //Log.d("Message2", String.valueOf(recyclerView.getChildAdapterPosition(v)));
-
-               // for(int i=0;i<=myAdapter.getItemCount();i++){
-                 //   RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(i);
-                   // View view = viewHolder.itemView;
-                    //view.getId();
-
-                    //Log.d("Child",view.toString());
-                //}
-
-                //Log.d("Child", String.valueOf(recyclerView.getChildAdapterPosition(findViewById(R.id.tv_quantity))));
-
-
-
-
-
-
-                Intent showcart = new Intent(context, CartActivity.class);
-                startActivity(showcart);
 
 
             }
         });
     }
-
 
 
     @Override
@@ -161,7 +133,6 @@ public class OrderActivity extends AppCompatActivity {
 
                                 products.add(i, product);
 
-
                                 Log.d("Message", String.valueOf(product.id));
 
 
@@ -171,14 +142,7 @@ public class OrderActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         myAdapter = new OrderAdapter(OrderActivity.this, products);
-                        /*
-                          myAdapter.setOnRecyclerViewItemClickListener(new OrderAdapter.OnRecyclerViewItemClickListener() {
-                            @Override
-                            public void onItemClicked(String text) {
-                                Log.d("Quantity", " = " + text);
-                            }
-                        });
-                         */
+
 
                         recyclerView.setAdapter(myAdapter);
 

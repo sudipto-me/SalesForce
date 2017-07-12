@@ -1,6 +1,7 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
@@ -29,7 +31,8 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     CartAdapter mcartAdapter;
     Button btn_proceedCart;
-    ArrayList<Cart>cartArrayList = new ArrayList<>();
+    ArrayList<Cart> cartArrayList = new ArrayList<>();
+    ArrayList<Product> products;
     Context context;
 
     public static final String KEY_NAME = "name";
@@ -45,10 +48,20 @@ public class CartActivity extends AppCompatActivity {
         setTitle("Cart");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        context = this;
+        products = new OrderActivity().products;
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.rv_simple_cart);
-        btn_proceedCart = (Button)findViewById(R.id.btn_proceed_cart);
+        for (int i = 0; i < products.size(); i++) {
+            Product P = products.get(i);
+            if (P.quantity > 0) {
+                Log.v("Quantity is", String.valueOf(P.quantity));
+                Log.v("Data", String.valueOf(P.id));
+            }
+        }
+
+        context = this;
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_simple_cart);
+        btn_proceedCart = (Button) findViewById(R.id.btn_proceed_cart);
+
     }
 
     @Override
@@ -62,7 +75,8 @@ public class CartActivity extends AppCompatActivity {
         btn_proceedCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Order Placed Successfully",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Order Placed Successfully", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -75,7 +89,8 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
-    public void proceedToCart(){
+
+    public void proceedToCart() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String cart_url = "http://inbackoffice.com/app/inforce/cart.php";
 
@@ -87,7 +102,7 @@ public class CartActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int res = jsonObject.getInt("success");
-                            if(res == 0){
+                            if (res == 0) {
                                 return;
                             }
 
@@ -99,7 +114,7 @@ public class CartActivity extends AppCompatActivity {
                         }
 
 
-                        mcartAdapter = new CartAdapter(CartActivity.this,cartArrayList);
+                        mcartAdapter = new CartAdapter(CartActivity.this, cartArrayList);
                         mRecyclerView.setAdapter(mcartAdapter);
                         mcartAdapter.notifyDataSetChanged();
 
@@ -110,13 +125,12 @@ public class CartActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
 
-
                     }
-                }){
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String,String>();
-                params.put(KEY_NAME,name);
-                params.put(KEY_QUANTITY,quantity);
+                }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put(KEY_NAME, name);
+                params.put(KEY_QUANTITY, quantity);
                 Log.d("Params", params.toString());
                 return params;
             }

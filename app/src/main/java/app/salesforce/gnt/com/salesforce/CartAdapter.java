@@ -35,7 +35,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Cart cart = mCartList.get(position);
         holder.tv_productName.setText(cart.getName());
-        holder.tv_price.setText(cart.getPrice());
+        holder.tv_quantity.setText(cart.getPrice());
 
     }
 
@@ -46,15 +46,15 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public ImageView iv_productLogo;
-        public TextView tv_productName,tv_productPrice,tv_price;
+        public TextView tv_productName,tv_ProductQuantity,tv_quantity;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             iv_productLogo = (ImageView)itemView.findViewById(R.id.iv_product_logo);
             tv_productName = (TextView)itemView.findViewById(R.id.tv_product_name);
-            tv_productPrice = (TextView)itemView.findViewById(R.id.tv_product_price);
-            tv_price = (TextView)itemView.findViewById(R.id.tv_price);
+            tv_ProductQuantity = (TextView)itemView.findViewById(R.id.tv_Product_Quantity);
+            tv_quantity = (TextView)itemView.findViewById(R.id.tv_Quanitity);
         }
     }
 }
