@@ -39,7 +39,10 @@
             android:name=".OrderActivity"
             android:label="Order"
             android:parentActivityName=".OutletActivity" />
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".CartActivity"
+            android:label="Cart"
+            android:parentActivityName=".OrderActivity"></activity>
     </application>
+
 
 </manifest>

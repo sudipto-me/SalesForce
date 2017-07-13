@@ -3,6 +3,8 @@ package app.salesforce.gnt.com.salesforce;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,8 +34,14 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter mcartAdapter;
     Button btn_proceedCart;
     ArrayList<Cart> cartArrayList = new ArrayList<>();
-    ArrayList<Product> products;
+    ArrayList<Product> products, updatedProducts;
+//    private static RecyclerView.State mBundleRecyclerViewState;
+//    private final String KEY_RECYCLER_STATE = "recycler_state";
+
+
     Context context;
+
+    LinearLayoutManager linearLayoutManager;
 
     public static final String KEY_NAME = "name";
     public static final String KEY_QUANTITY = "quantity";
@@ -50,19 +58,46 @@ public class CartActivity extends AppCompatActivity {
 
         products = new OrderActivity().products;
 
-        for (int i = 0; i < products.size(); i++) {
-            Product P = products.get(i);
-            if (P.quantity > 0) {
-                Log.v("Quantity is", String.valueOf(P.quantity));
-                Log.v("Data", String.valueOf(P.id));
-            }
-        }
+        updatedProducts = new ArrayList<>();
+
 
         context = this;
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_simple_cart);
         btn_proceedCart = (Button) findViewById(R.id.btn_proceed_cart);
 
+
     }
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        mBundleRecyclerViewState = new Bundle();
+//        Parcelable listState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+//        mBundleRecyclerViewState.putParcelable(KEY_RECYCLER_STATE,listState);
+//
+//
+//
+//    }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle state) {
+//        super.onSaveInstanceState(state);
+//
+//        mBundleRecyclerViewState = (RecyclerView.State) linearLayoutManager.onSaveInstanceState();
+//        state.putParcelable(KEY_RECYCLER_STATE, (Parcelable) mBundleRecyclerViewState);
+//
+//    }
+//
+//    @Override
+//    protected void onRestoreInstanceState(Bundle state) {
+//        super.onRestoreInstanceState(state);
+//
+//        if(state!=null){
+//
+//            mBundleRecyclerViewState = state.getParcelable(KEY_RECYCLER_STATE);
+//
+//        }
+//    }
 
     @Override
     protected void onStart() {
@@ -71,6 +106,8 @@ public class CartActivity extends AppCompatActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        addToCart();
 
         btn_proceedCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,13 +119,34 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onResume() {
         super.onResume();
-        cartArrayList.clear();
+//      //  if(mBundleRecyclerViewState!=null){
+////            Parcelable listState = mBundleRecyclerViewState.getParcelable(KEY_RECYCLER_STATE);
+////            mRecyclerView.getLayoutManager().onRestoreInstanceState(listState);
+//
+//            //linearLayoutManager.onRestoreInstanceState((Parcelable) mBundleRecyclerViewState);
+//        }
+
 
     }
 
+
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //mRecyclerView.setHasFixedSize(true);
+          //linearLayoutManager = new LinearLayoutManager(context);
+        //mRecyclerView.setLayoutManager(linearLayoutManager);
+        //linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+
+    }
 
     public void proceedToCart() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -114,7 +172,7 @@ public class CartActivity extends AppCompatActivity {
                         }
 
 
-                        mcartAdapter = new CartAdapter(CartActivity.this, cartArrayList);
+                        //  mcartAdapter = new CartAdapter(CartActivity.this, cartArrayList);
                         mRecyclerView.setAdapter(mcartAdapter);
                         mcartAdapter.notifyDataSetChanged();
 
@@ -138,5 +196,28 @@ public class CartActivity extends AppCompatActivity {
 
 
         requestQueue.add(stringRequest);
+    }
+
+    public void addToCart() {
+        for (int i = 0; i < products.size(); i++) {
+            Product P = products.get(i);
+            if (P.quantity > 0) {
+                updatedProducts.add(P);
+
+
+                int id = P.id;
+                int quantity = P.quantity;
+                Log.d("Data id:", String.valueOf(id));
+                Log.d("Data quantity:", String.valueOf(quantity));
+
+            }
+            mcartAdapter = new CartAdapter(CartActivity.this, updatedProducts);
+            mRecyclerView.setAdapter(mcartAdapter);
+            mcartAdapter.notifyDataSetChanged();
+
+
+        }
+
+
     }
 }

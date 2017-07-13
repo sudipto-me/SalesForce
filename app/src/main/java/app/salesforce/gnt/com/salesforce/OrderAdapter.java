@@ -31,17 +31,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         this.mProductList = mProductList;
     }
 
-    private static OnRecyclerViewItemClickListener mListener;
-
-    // Define the listener interface
-    public interface OnRecyclerViewItemClickListener {
-        void onItemClicked(String text);
-    }
-
-    // Define the method that allows the parent activity or fragment to define the listener.
-    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener listener) {
-        this.mListener = listener;
-    }
+//    private static OnRecyclerViewItemClickListener mListener;
+//
+//    // Define the listener interface
+//    public interface OnRecyclerViewItemClickListener {
+//        void onItemClicked(String text);
+//    }
+//
+//    // Define the method that allows the parent activity or fragment to define the listener.
+//    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener listener) {
+//        this.mListener = listener;
+//    }
 
 
     @Override
@@ -60,10 +60,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
-
-                sumValue+= holder.getQuantity();
-                Toast.makeText(context,holder.getQuantity()+"",Toast.LENGTH_SHORT).show();
-
 
             }
         });
@@ -97,9 +93,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
 
 
-    public int getSumValue(){
-        return sumValue;
-    }
 
 
     @Override
@@ -163,12 +156,12 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
         }
 
-        public void displayQuantity(int number) {
-
-
-            tv_productquantity.setText("" + number);
-
-        }
+//        public void displayQuantity(int number) {
+//
+//
+//            tv_productquantity.setText("" + number);
+//
+//        }
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;

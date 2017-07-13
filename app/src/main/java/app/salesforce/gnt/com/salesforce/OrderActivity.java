@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
     Context context;
@@ -35,6 +36,11 @@ public class OrderActivity extends AppCompatActivity {
     public static final String KEY_NAME = "product_name";
     Product product;
 
+    private static RecyclerView.State mBundleRecyclerViewState;
+    private final String KEY_RECYCLER_STATE = "recycler_state";
+
+    LinearLayoutManager linearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +49,28 @@ public class OrderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
-
-
         recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         btn_showCart = (Button) findViewById(R.id.btn_show_cart);
-
+        myAdapter = new OrderAdapter(OrderActivity.this, products);
 
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        products.clear();
-        sendRequestforProducts();
+        if (!(products.size() >0)) {
+            sendRequestforProducts();
+        }else {
+            recyclerView.setAdapter(myAdapter);
+            myAdapter.notifyDataSetChanged();
+        }
+
+        Log.d("Error log", toString());
 
 
         btn_showCart.setOnClickListener(new View.OnClickListener() {
@@ -67,30 +78,55 @@ public class OrderActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                //Log.d("Quantity", String.valueOf(products.size()));
                 for (int i = 0; i < products.size(); i++) {
                     Product p = products.get(i);
 
                     Log.d("Product ids", " = " + p.id);
                     Log.d("Products quantity", "=" + p.quantity);
 
-                    Intent cartIntent = new Intent(context, CartActivity.class);
-                    startActivity(cartIntent);
 
                 }
-
+                Intent cartIntent = new Intent(context, CartActivity.class);
+                startActivity(cartIntent);
 
             }
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    //    protected Parcelable onSaveInstanceState() {
+//
+//        Bundle bunlde = new Bundle();
+//        bunlde.putParcelable(KEY_RECYCLER_STATE,recyclerView.getLayoutManager().onSaveInstanceState());
+//        return bunlde;
+//
+//    }
+
+
+
+//    protected void onRestoreInstanceState(Parcelable state) {
+//       if (state instanceof Bundle){
+//           mBundleRecyclerViewState = ((Bundle)state).getParcelable(KEY_RECYCLER_STATE);
+//       }
+//       super.onRestoreInstanceState((Bundle) state);
+//    }
 
     @Override
     protected void onResume() {
-        products.clear();
         super.onResume();
 
+
     }
+
+//    public void setItems(List objects){
+//        myAdapter.set
+//    }
+
 
     public void sendRequestforProducts() {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -141,11 +177,8 @@ public class OrderActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        myAdapter = new OrderAdapter(OrderActivity.this, products);
-
 
                         recyclerView.setAdapter(myAdapter);
-
                         myAdapter.notifyDataSetChanged();
 
                     }

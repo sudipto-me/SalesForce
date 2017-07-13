@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +17,9 @@ import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
-    public List<Cart>mCartList;
+    public List<Product>mCartList;
 
-    public CartAdapter(Context context,List<Cart>mCartList){
+    public CartAdapter(Context context, ArrayList<Product> mCartList){
         this.context = context;
         this.mCartList = mCartList;
     }
@@ -33,10 +34,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Cart cart = mCartList.get(position);
+        final Product cart = mCartList.get(position);
         holder.tv_productName.setText(cart.getName());
-        holder.tv_quantity.setText(cart.getPrice());
-
+        holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
     }
 
     @Override
