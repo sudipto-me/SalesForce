@@ -29,6 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static android.app.ActionBar.DISPLAY_SHOW_CUSTOM;
+
 public class LocationActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -54,7 +56,7 @@ public class LocationActivity extends AppCompatActivity {
         context = this;
         // toolbar = (Toolbar)findViewById(R.id.tool_bar);
         //toolbar.hideOverflowMenu();
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayOptions(DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -71,6 +73,13 @@ public class LocationActivity extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_location_name);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null){
+            int employee = extras.getInt("emp_id");
+
+            Log.d("Employee id", String.valueOf(employee));
+        }
 
     }
 

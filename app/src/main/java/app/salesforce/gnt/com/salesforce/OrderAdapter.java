@@ -26,22 +26,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     List<Product> mProductList;
 
     int sumValue = 0;
+
     public OrderAdapter(Context context, List<Product> mProductList) {
         this.context = context;
         this.mProductList = mProductList;
     }
-
-//    private static OnRecyclerViewItemClickListener mListener;
-//
-//    // Define the listener interface
-//    public interface OnRecyclerViewItemClickListener {
-//        void onItemClicked(String text);
-//    }
-//
-//    // Define the method that allows the parent activity or fragment to define the listener.
-//    public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener listener) {
-//        this.mListener = listener;
-//    }
 
 
     @Override
@@ -63,14 +52,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
             }
         });
-
-
-
-
         holder.tv_productid.setText(String.valueOf(product.getId()));
-
         holder.tv_productname.setText(product.getName());
-
         holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
         holder.tv_productquantity.invalidate();
 
@@ -79,20 +62,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             public void onClick(View v) {
                 product.quantity++;
                 holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
+
             }
         });
+
         holder.btn_decrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 product.quantity--;
+                if(product.quantity<=0)
+                    product.quantity = 0;
                 holder.tv_productquantity.setText(String.valueOf(product.getQuantity()));
+
+
             }
         });
 
+
     }
-
-
-
 
 
     @Override
@@ -103,12 +90,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tv_productname, tv_productid;
-        public TextView tv_productquantity;
+        public TextView tv_productquantity,tv_productprice;
         public Button btn_increment;
         public Button btn_decrement;
 
         public ItemClickListener itemClickListener;
-
 
 
         int quantity = 0;
@@ -117,8 +103,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             super(itemView);
 
 
-            tv_productid = (TextView) itemView.findViewById(R.id.tv_product_id);
 
+
+            tv_productid = (TextView)itemView.findViewById(R.id.tv_product_id);
             tv_productname = (TextView) itemView.findViewById(R.id.tv_shop_name);
 
             btn_increment = (Button) itemView.findViewById(R.id.btn_add_to_cart);
@@ -127,41 +114,16 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
             tv_productquantity = (TextView) itemView.findViewById(R.id.tv_quantity);
 
+            //tv_productprice = (TextView)itemView.findViewById(R.id.tv_ProductPrice);
 
 
             itemView.setOnClickListener(this);
 
-//            btn_increment.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    quantity++;
-//
-//                    displayQuantity(quantity);
-//
-//                }
-//            });
-//
-//            btn_decrement.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    quantity--;
-//                    if (quantity <= 0) {
-//                        quantity = 0;
-//                    }
-//                    displayQuantity(quantity);
-//
-//                }
-//            });
 
 
         }
 
-//        public void displayQuantity(int number) {
-//
-//
-//            tv_productquantity.setText("" + number);
-//
-//        }
+
 
         public void setItemClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
@@ -172,11 +134,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 
 
 
-            //Toast.makeText(context, String.valueOf(getAdapterPosition())+" "+tv_productquantity.getText(), Toast.LENGTH_SHORT).show();
 
         }
 
-        public int getQuantity(){
+        public int getQuantity() {
             return quantity;
         }
 

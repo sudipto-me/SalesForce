@@ -21,48 +21,119 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <ImageView
-                android:id="@+id/iv_product_logo"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_margin="8dp"
-                android:padding="8dp"
-                android:src="@drawable/chickenlogo" />
-
-            <TextView
-                android:id="@+id/tv_product_name"
+            <LinearLayout
+                android:id="@+id/first_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:padding="8dp"
-                android:text="Product name"
-                android:textColor="@color/colorAccent"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/tv_Product_Quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
                 android:padding="5dp"
-                android:text="Quantity:"
-                android:textColor="#880E4F"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/tv_Quanitity"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_Product_ID"
+                    android:text="id"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="#3F51B5"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="2"
+                    android:text="Product name"
+                    android:textColor="#3F51B5"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/second_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:padding="5dp"
-                android:text="0"
-                android:textColor="#D50000"
-                android:textSize="20sp"
-                android:textStyle="italic" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_Product_Quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1"
+                        android:text="Quantity:"
+                        android:textColor="#3F51B5"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_Product_Price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/tv_Product_Quantity"
+                        android:layout_alignParentBottom="true"
+                        android:text="Price:"
+                        android:textColor="#3F51B5"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_Quanitity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toEndOf="@+id/tv_Product_Quantity"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textColor="#3F51B5"
+                        android:textSize="20sp"
+                        android:textStyle="italic" />
+
+
+                    <TextView
+                        android:id="@+id/tv_Price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignRight="@id/tv_Product_Price"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toEndOf="@+id/tv_Quanitity"
+                        android:layout_weight="1"
+                        android:text="0"
+                        android:textColor="#3F51B5"
+                        android:textSize="20sp"
+                        android:textStyle="italic" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>

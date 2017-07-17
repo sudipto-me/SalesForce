@@ -29,7 +29,7 @@ public class OutletActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     OutletAdapter myOutletAdapter;
-    ArrayList<Outlet> mOutletList = new ArrayList<>();
+    public static ArrayList<Outlet> mOutletList = new ArrayList<>();
     Context context;
 
     public static final String KEY_USER_ID = "emp_id";
@@ -37,6 +37,8 @@ public class OutletActivity extends AppCompatActivity {
 
     public static final String KEY_ID = "outlet_id";
     public static final String KEY_NAME = "outlet_name";
+
+    Outlet outlet;
 
     private String userid;
     private String locationid;
@@ -75,7 +77,18 @@ public class OutletActivity extends AppCompatActivity {
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                for(int i=0;i<mOutletList.size();i++){
+//                    Outlet O = mOutletList.get(i);
+//
+//                    Log.d("OUtlet ID", String.valueOf(O.id));
+//
+//
+//                }
                 Intent intent = new Intent(context,OrderActivity.class);
+
+                intent.putExtra("id",outlet.getId());//sending outlet id
+
                 startActivity(intent);
             }
         });
@@ -117,7 +130,7 @@ public class OutletActivity extends AppCompatActivity {
 
                                 JSONObject jobj = jsonArray.getJSONObject(i);
 
-                                Outlet outlet = new Outlet();
+                                 outlet = new Outlet();
 
 
                                 if (!jobj.isNull("outlet_id")) {

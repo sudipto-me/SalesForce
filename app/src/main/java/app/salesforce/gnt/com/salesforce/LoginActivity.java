@@ -92,7 +92,12 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
 
 
-            startActivity(new Intent(LoginActivity.this, LocationActivity.class));
+            //startActivity(new Intent(LoginActivity.this, LocationActivity.class));
+
+            Intent intent = new Intent(context,LocationActivity.class);
+            intent.putExtra("emp_id",cursor.getString(1));
+            startActivity(intent);
+
         }
 
         //button listener for sign in
@@ -141,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
 
                            // Toast.makeText(context, "result: id" + id + " name: " + name + " dob:" + dob + " designation:" + des, Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(context,LocationActivity.class);
+                            intent.putExtra("emp_id",id);
                             startActivity(intent);
 
 

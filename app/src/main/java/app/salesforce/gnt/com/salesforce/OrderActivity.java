@@ -32,9 +32,16 @@ public class OrderActivity extends AppCompatActivity {
     OrderAdapter myAdapter;
     public static ArrayList<Product> products = new ArrayList<>();
 
+    ArrayList<Outlet>outlets,clickedOutlet;
+
+
     public static final String KEY_ID = "product_id";
     public static final String KEY_NAME = "product_name";
     Product product;
+
+    Outlet outlet;
+
+    int id;
 
     private static RecyclerView.State mBundleRecyclerViewState;
     private final String KEY_RECYCLER_STATE = "recycler_state";
@@ -48,10 +55,15 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        clickedOutlet = new OutletActivity().mOutletList;
+        outlets = new ArrayList<>();
+
         context = this;
         recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         btn_showCart = (Button) findViewById(R.id.btn_show_cart);
         myAdapter = new OrderAdapter(OrderActivity.this, products);
+        int position;
 
     }
 
@@ -83,10 +95,23 @@ public class OrderActivity extends AppCompatActivity {
 
                     Log.d("Product ids", " = " + p.id);
                     Log.d("Products quantity", "=" + p.quantity);
+                    Log.d("Products Price","="+(p.price*p.quantity));
 
 
                 }
+
+
+
+
                 Intent cartIntent = new Intent(context, CartActivity.class);
+                //getting outlet id
+                Bundle extras = getIntent().getExtras();
+                if(extras!=null){
+                   int  position = extras.getInt("id");
+
+                    cartIntent.putExtra("Outletid",position);
+                    Log.d("outletid", String.valueOf(position));
+                }
                 startActivity(cartIntent);
 
             }
@@ -99,22 +124,7 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
-    //    protected Parcelable onSaveInstanceState() {
-//
-//        Bundle bunlde = new Bundle();
-//        bunlde.putParcelable(KEY_RECYCLER_STATE,recyclerView.getLayoutManager().onSaveInstanceState());
-//        return bunlde;
-//
-//    }
 
-
-
-//    protected void onRestoreInstanceState(Parcelable state) {
-//       if (state instanceof Bundle){
-//           mBundleRecyclerViewState = ((Bundle)state).getParcelable(KEY_RECYCLER_STATE);
-//       }
-//       super.onRestoreInstanceState((Bundle) state);
-//    }
 
     @Override
     protected void onResume() {
@@ -130,7 +140,7 @@ public class OrderActivity extends AppCompatActivity {
 
     public void sendRequestforProducts() {
         RequestQueue queue = Volley.newRequestQueue(context);
-        String product_url = "http://inbackoffice.com/app/inforce/product.php";
+        final String product_url = "http://inbackoffice.com/app/inforce/product.php";
 
         StringRequest jsonArrayRequest = new StringRequest(Request.Method.POST, product_url,
                 new Response.Listener<String>() {
@@ -167,9 +177,14 @@ public class OrderActivity extends AppCompatActivity {
                                     product.quantity = jsonObject.getInt("quantity");
                                 }
 
+                                if(!jsonObject.isNull("price")){
+                                    product.price = jsonObject.getInt("price");
+                                }
+
                                 products.add(i, product);
 
                                 Log.d("Message", String.valueOf(product.id));
+                                Log.d("Price",String.valueOf(product.price));
 
 
                             }

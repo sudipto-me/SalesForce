@@ -12,14 +12,14 @@ public class Product  implements Serializable {
     public int id;
     public String name;
     public int quantity;
-    public String price;
+    public int price;
 
 
     public Product() {
 
     }
 
-    public Product(int id, String name, int quantity, String price) {
+    public Product(int id, String name, int quantity, int price) {
         this.id = id;
         this.name = name;
         this.quantity = quantity;
@@ -56,11 +56,11 @@ public class Product  implements Serializable {
         this.quantity = quantity;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

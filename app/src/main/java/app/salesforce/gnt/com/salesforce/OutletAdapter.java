@@ -43,8 +43,14 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
-                Toast.makeText(context, "You clicked:" + outlet.getId(), Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context, OrderActivity.class));
+
+
+                Intent intent = new Intent(view.getContext(),OrderActivity.class);
+                intent.putExtra("id",outlet.getId());
+                view.getContext().startActivity(intent);
+
+              Toast.makeText(context, "You clicked:" + outlet.getId(), Toast.LENGTH_SHORT).show();
+//                context.startActivity(new Intent(context, OrderActivity.class));
             }
         });
 
@@ -86,7 +92,9 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
+           // int position = getAdapterPosition();
             itemClickListener.OnClick(view, (int) getItemId());
+
         }
     }
 

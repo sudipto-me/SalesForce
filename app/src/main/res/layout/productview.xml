@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        android:id = "@+id/cv_outlet"
+        android:id="@+id/cv_outlet"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginBottom="8dp"
@@ -15,59 +15,62 @@
         android:layout_marginRight="5dp"
         android:layout_marginTop="16dp"
         android:background="@color/cardview_shadow_end_color"
+        android:foreground="@color/cardview_shadow_end_color"
         app:cardCornerRadius="8dp"
-        card_view:cardUseCompatPadding="true"
         app:cardElevation="30dp"
-        android:foreground = "@color/cardview_shadow_end_color">
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="6">
 
             <TextView
                 android:id="@+id/tv_product_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Id"
-                android:textSize="25sp"
-                android:textStyle="bold"/>
-
+                android:layout_gravity="center"
+                android:text="ID"
+                android:textSize="20sp"
+                android:textColor="#42A5F5"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/tv_shop_name"
-                android:layout_width="140dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_weight="5"
                 android:fontFamily="sans-serif-condensed"
                 android:paddingLeft="8dp"
                 android:text="ProductName"
+                android:textColor="#42A5F5"
                 android:textSize="23.5sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_delete_from_cart"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginRight="8dp"
                 android:text="-"
+                android:background="#0277BD"
                 android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_quantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
                 android:text="0"
+                android:textColor="#2962FF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -75,16 +78,14 @@
                 android:id="@+id/btn_add_to_cart"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="16dp"
                 android:text="+"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:background="#0277BD"/>
 
 
         </LinearLayout>
-
-
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
