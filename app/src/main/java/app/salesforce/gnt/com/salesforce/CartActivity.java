@@ -2,6 +2,7 @@ package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
@@ -42,13 +43,30 @@ public class CartActivity extends AppCompatActivity {
 
     Context context;
 
+    MyDB db;
+
+    CartDB db1;
+
+    public Cursor cursor;
+
+
     LinearLayoutManager linearLayoutManager;
 
-    public static final String KEY_NAME = "name";
-    public static final String KEY_QUANTITY = "quantity";
+    public static final String KEY_OUTLET_ID = "outlet_id";
+    public static final String KEY_AGENT_ID = "employee_id";
+    public static final String KEY_id = "id";
+    public static final String KEY_quantity = "q";
+    public static final String KEY_total = "total";
 
     private String name;
     private String quantity;
+
+    int position;
+    int agent_id;
+
+    Product P;
+
+    int agent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +85,17 @@ public class CartActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_simple_cart);
         btn_proceedCart = (Button) findViewById(R.id.btn_proceed_cart);
 
+
         //getting outlet id
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            int position = extras.getInt("Outletid");
+            position = extras.getInt("Outletid");
 
 
             Log.d("newOutlet", String.valueOf(position));
         }
+
+        // db1.insertData(String.valueOf(position));
 
 
     }
@@ -88,13 +109,44 @@ public class CartActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        db = new MyDB(this);
+        cursor = db.getData();
+
+        if (cursor.moveToFirst()) {
+
+            agent = cursor.getInt(0);
+        }
+
+
         addToCart();
 
         btn_proceedCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(context, "Order Placed Successfully", Toast.LENGTH_SHORT).show();
+
+                try {
+                    for (int i = 0; i < updatedProducts.size(); i++) {
+                        int id = updatedProducts.get(i).getId();
+                        int quantity = updatedProducts.get(i).getQuantity();
+                        int price = updatedProducts.get(i).getPrice();
+
+                        db.insertproducts(position, id, quantity, price);
+                    }
+                    Cursor cursor1 = db.getProducts();
+                    while (cursor1.moveToFirst()) {
+                        Log.d("Inserted", String.valueOf(cursor1.getColumnCount()));
+                    }
+
+                } catch (Exception e) {
+                    Log.d("Error", e.getMessage());
+                }
+
+                proceedToCart();
+
+                btn_proceedCart.setVisibility(View.GONE);
+                //Toast.makeText(context, "Employee id is:" + agent + "Outlet Id is: " + position, Toast.LENGTH_LONG).show();
+
 
             }
         });
@@ -105,6 +157,7 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
 
     }
 
@@ -119,7 +172,7 @@ public class CartActivity extends AppCompatActivity {
         for (int i = 0; i < products.size(); i++) {
 
 
-            Product P = products.get(i);
+            P = products.get(i);
             if (P.quantity > 0) {
                 updatedProducts.add(P);
 
@@ -144,38 +197,34 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
-}
-/*
-
 
 
     public void proceedToCart() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        String cart_url = "http://inbackoffice.com/app/inforce/cart.php";
+        String cart_url = "http://inbackoffice.com/app/inforce/place_order.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, cart_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        btn_proceedCart.setVisibility(View.VISIBLE);
+                        Log.d("Cart", "" + response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int res = jsonObject.getInt("success");
+                            Log.d("Cart", "" + response);
                             if (res == 0) {
-                                return;
+                                String msg = jsonObject.getString("message");
+                                Toast.makeText(CartActivity.this, "MSG: " + msg, Toast.LENGTH_LONG).show();
                             }
 
-                            String msg = jsonObject.getString("message");
-
+                            // String msg = jsonObject.getString("message");
+                            //Toast.makeText(context, msg.toString(), Toast.LENGTH_LONG).show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-
-                        //  mcartAdapter = new CartAdapter(CartActivity.this, cartArrayList);
-                        mRecyclerView.setAdapter(mcartAdapter);
-                        mcartAdapter.notifyDataSetChanged();
 
                     }
                 },
@@ -183,13 +232,20 @@ public class CartActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
+                        Log.d("Error", error.toString());
+
 
                     }
                 }) {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put(KEY_NAME, name);
-                params.put(KEY_QUANTITY, quantity);
+                params.put(KEY_AGENT_ID, String.valueOf(agent));
+                params.put(KEY_OUTLET_ID, String.valueOf(position));
+                params.put(KEY_total, String.valueOf(updatedProducts.size()));
+                for (int i = 0; i < updatedProducts.size(); i++) {
+                    params.put(KEY_id + "_" + i, String.valueOf(updatedProducts.get(i).getId()));
+                    params.put(KEY_quantity + "_" + i, String.valueOf(updatedProducts.get(i).getQuantity()));
+                }
                 Log.d("Params", params.toString());
                 return params;
             }
@@ -198,4 +254,6 @@ public class CartActivity extends AppCompatActivity {
 
         requestQueue.add(stringRequest);
     }
-    */
+
+   
+}

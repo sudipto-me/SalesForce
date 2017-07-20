@@ -94,9 +94,10 @@ public class LoginActivity extends AppCompatActivity {
 
             //startActivity(new Intent(LoginActivity.this, LocationActivity.class));
 
-            Intent intent = new Intent(context,LocationActivity.class);
-            intent.putExtra("emp_id",cursor.getString(1));
-            startActivity(intent);
+            Intent myIntent = new Intent(context,LocationActivity.class);
+            myIntent.putExtra("Agent_ID",cursor.getInt(0));
+            startActivity(myIntent);
+
 
         }
 
@@ -130,10 +131,10 @@ public class LoginActivity extends AppCompatActivity {
                             int res = jobj.getInt("success");
                             if (res == 0) {
 
-                                Toast.makeText(context,"Result",Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Result", Toast.LENGTH_LONG).show();
                                 return;
                             }
-                            Log.d("Success=1",response.toString());
+                            Log.d("Success=1", response.toString());
                             String msg = jobj.getString("message");
                             JSONArray jsonArray = jobj.getJSONArray("user");
                             JSONObject jsonObject = jsonArray.getJSONObject(0);
@@ -144,14 +145,19 @@ public class LoginActivity extends AppCompatActivity {
                             db.insertData(id);
                             Log.d("Data", db.toString());
 
-                           // Toast.makeText(context, "result: id" + id + " name: " + name + " dob:" + dob + " designation:" + des, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(context,LocationActivity.class);
-                            intent.putExtra("emp_id",id);
-                            startActivity(intent);
+                            Toast.makeText(context, "result: id" + id + " name: " + name + " dob:" + dob + " designation:" + des, Toast.LENGTH_LONG).show();
+
+                            //passing the agent id to the location
+                            Intent myIntent = new Intent(context, LocationActivity.class);
+                            myIntent.putExtra("Employee_id", Integer.parseInt(id));
+                            startActivity(myIntent);
+
+//                            Intent intent = new Intent(context,LocationActivity.class);
+//                            startActivity(intent);
 
 
                         } catch (JSONException e) {
-                            Log.e("jsonexception",e.getMessage());
+                            Log.e("jsonexception", e.getMessage());
                         }
 
                     }

@@ -47,6 +47,12 @@ public class LocationActivity extends AppCompatActivity {
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
 
+    Bundle extras;
+    int employee_id;
+
+    public int id;
+
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,13 +79,14 @@ public class LocationActivity extends AppCompatActivity {
 
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_location_name);
-
-        Bundle extras = getIntent().getExtras();
-        if(extras!=null){
-            int employee = extras.getInt("emp_id");
-
-            Log.d("Employee id", String.valueOf(employee));
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            employee_id = extras.getInt("Agent_ID");
+            //Log.d("Agent id",String.valueOf(employee_id));
         }
+
+        //Log.d("Agent id",String.valueOf(employee_id));
+
 
     }
 
@@ -92,6 +99,10 @@ public class LocationActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         locations.clear();
         sendRequestforLocation();
+
+        id = employee_id;
+
+        Log.v("Fucked", String.valueOf(id));
 
 
         btn_syncData.setOnClickListener(new View.OnClickListener() {
@@ -110,9 +121,12 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Log.d("Rec.Onclk", "Emp_id:" + employee_id);
+                Toast.makeText(LocationActivity.this, "Emp_id:" + employee_id, Toast.LENGTH_LONG).show();
+
                 Intent myIntent = new Intent(context, OutletActivity.class);
-                //myIntent.putExtra("UserID",s);
-                //myIntent.putExtra("LocaionID",location.getId());
+
+
                 startActivity(myIntent);
             }
         });

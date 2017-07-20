@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 /**
  * Created by PC-05 on 5/10/2017.
  */
@@ -19,17 +21,35 @@ public class MyDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     //database name
     private static final String DATABASE_NAME = "Inforce.db";
-    //table name
+    //employee table name
     private static final String TABLE_NAME = "employee";
     //columns name
     private static final String COLOUMN_ONE = "id";
     private static final String COLOUMN_TWO = "value";
+
+    //product table
+    private static final String TABLE_PRODUCT = "product";
+    //columns name
+    private static final String COLUMN_ONE = "id";
+    private static final String COLUMN_TWO = "value";
+    private static final String COLUMN_THREE = "product_id";
+    private static final String COLUMN_FOUR = "product_quantity";
+    private static final String COLUMN_FIVE = "product_price";
+
 
     //table query
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     COLOUMN_ONE + " INTEGER PRIMARY KEY," +
                     COLOUMN_TWO + " TEXT)";
+    //new table
+    private static final String SQL_CREATE_PRODUCTS = "CREATE TABLE" + TABLE_PRODUCT +
+            "(" + COLUMN_ONE + "INTEGER PRIMARY KEY," +
+            COLUMN_TWO + "TEXT" +
+            COLUMN_THREE + "TEXT" +
+            COLUMN_FOUR + "TEXT" +
+            COLUMN_FIVE + "TEXT)";
+
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -43,6 +63,7 @@ public class MyDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_PRODUCTS);
 
     }
 
@@ -77,6 +98,34 @@ public class MyDB extends SQLiteOpenHelper {
 
     }
 
+    //adding  information to the database
+    public void insertproducts(int value, int value1,int value2, int value3) {
+
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+
+
+        try {
+
+            contentValues.put(COLUMN_ONE, 1);
+            contentValues.put(COLUMN_TWO, value);
+            contentValues.put(COLUMN_THREE, value1);
+            contentValues.put(COLUMN_FOUR, value2);
+            contentValues.put(COLUMN_FIVE,value3);
+
+
+                db.insertOrThrow(TABLE_NAME, null, contentValues);
+            }
+         catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     //getting single employee id from the database
     public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -97,6 +146,32 @@ public class MyDB extends SQLiteOpenHelper {
                 null,                  //don't filter the row group
                 null                   //The sort order
         );
+        return cursor;
+    }
+
+    //getting information from the database
+    public Cursor getProducts() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        // Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        String[] projection = {
+                COLUMN_ONE,
+                COLUMN_TWO,
+                COLUMN_THREE,
+                COLUMN_FOUR,
+                COLUMN_FIVE
+        };
+
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
         return cursor;
     }
 

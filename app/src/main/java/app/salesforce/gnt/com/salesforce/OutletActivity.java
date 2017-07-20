@@ -46,6 +46,9 @@ public class OutletActivity extends AppCompatActivity {
     private String id;
     private String name;
 
+    Bundle extra;
+    int employee_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,13 @@ public class OutletActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rv_outlet_name);
 
 
-
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            int employee_id = extras.getInt("Employee id");
+//            Log.d("Employee id", String.valueOf(employee_id));
+//
+//
+//        }
 
     }
 
@@ -74,20 +83,21 @@ public class OutletActivity extends AppCompatActivity {
         mOutletList.clear();
         sendRequestForOutlet();
 
+        extra = getIntent().getExtras();
+        if(extra!=null){
+            employee_id = extra.getInt("Employee id");
+            Log.d("Fucking id", String.valueOf(employee_id));
+        }
+
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                for(int i=0;i<mOutletList.size();i++){
-//                    Outlet O = mOutletList.get(i);
-//
-//                    Log.d("OUtlet ID", String.valueOf(O.id));
-//
-//
-//                }
-                Intent intent = new Intent(context,OrderActivity.class);
+                Intent intent = new Intent(context, OrderActivity.class);
 
-                intent.putExtra("id",outlet.getId());//sending outlet id
+
+
+                intent.putExtra("id", outlet.getId());//sending outlet id
 
                 startActivity(intent);
             }
@@ -115,13 +125,14 @@ public class OutletActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         Log.d("Result", response.toString());
-                       // Toast.makeText(context, "Response" + response, Toast.LENGTH_LONG).show();
+                        // Toast.makeText(context, "Response" + response, Toast.LENGTH_LONG).show();
 
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int res = jsonObject.getInt("success");
-                            if (res == 0){
-                                return;}
+                            if (res == 0) {
+                                return;
+                            }
 
 
                             String message = jsonObject.getString("message");
@@ -130,7 +141,7 @@ public class OutletActivity extends AppCompatActivity {
 
                                 JSONObject jobj = jsonArray.getJSONObject(i);
 
-                                 outlet = new Outlet();
+                                outlet = new Outlet();
 
 
                                 if (!jobj.isNull("outlet_id")) {
@@ -140,7 +151,7 @@ public class OutletActivity extends AppCompatActivity {
 
                                 if (!jobj.isNull("outlet_name")) {
                                     outlet.outletname = jobj.getString("outlet_name");
-                                     }
+                                }
                                 mOutletList.add(i, outlet);
 
 
