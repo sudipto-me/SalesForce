@@ -94,7 +94,7 @@ public class MyDB extends SQLiteOpenHelper {
         contentValues.put(COLOUMN_TWO, value);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(TABLE_NAME, null, contentValues);
+        long newRowId = db.insert(TABLE_PRODUCT, null, contentValues);
 
     }
 
@@ -111,7 +111,7 @@ public class MyDB extends SQLiteOpenHelper {
 
         try {
 
-            contentValues.put(COLUMN_ONE, 1);
+
             contentValues.put(COLUMN_TWO, value);
             contentValues.put(COLUMN_THREE, value1);
             contentValues.put(COLUMN_FOUR, value2);

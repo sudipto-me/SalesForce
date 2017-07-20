@@ -255,5 +255,5 @@ public class CartActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-   
+
 }
