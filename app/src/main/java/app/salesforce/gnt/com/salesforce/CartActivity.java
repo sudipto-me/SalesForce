@@ -43,6 +43,8 @@ public class CartActivity extends AppCompatActivity {
 
     Context context;
 
+
+
     MyDB db;
 
     CartDB db1;
@@ -130,8 +132,7 @@ public class CartActivity extends AppCompatActivity {
                         int id = updatedProducts.get(i).getId();
                         int quantity = updatedProducts.get(i).getQuantity();
                         int price = updatedProducts.get(i).getPrice();
-
-                        db.insertproducts(position, id, quantity, price);
+                        db.insertITEMS(i,position,id,quantity,price);
                     }
                     Cursor cursor1 = db.getProducts();
                     while (cursor1.moveToFirst()) {

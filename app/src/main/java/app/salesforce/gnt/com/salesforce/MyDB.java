@@ -18,7 +18,7 @@ public class MyDB extends SQLiteOpenHelper {
 
 
     //database version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 6;
     //database name
     private static final String DATABASE_NAME = "Inforce.db";
     //employee table name
@@ -28,7 +28,7 @@ public class MyDB extends SQLiteOpenHelper {
     private static final String COLOUMN_TWO = "value";
 
     //product table
-    private static final String TABLE_PRODUCT = "product";
+    private static final String TABLE_ITEMS = "item";
     //columns name
     private static final String COLUMN_ONE = "id";
     private static final String COLUMN_TWO = "value";
@@ -43,8 +43,7 @@ public class MyDB extends SQLiteOpenHelper {
                     COLOUMN_ONE + " INTEGER PRIMARY KEY," +
                     COLOUMN_TWO + " TEXT)";
     //new table
-    private static final String SQL_CREATE_PRODUCTS = "CREATE TABLE" + TABLE_PRODUCT +
-            "(" + COLUMN_ONE + "INTEGER PRIMARY KEY," +
+    private static final String SQL_CREATE_ITEMS = "CREATE TABLE ITEMS (" + COLUMN_ONE + "INTEGER PRIMARY KEY," +
             COLUMN_TWO + "TEXT" +
             COLUMN_THREE + "TEXT" +
             COLUMN_FOUR + "TEXT" +
@@ -63,14 +62,17 @@ public class MyDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
-        db.execSQL(SQL_CREATE_PRODUCTS);
+        db.execSQL(SQL_CREATE_ITEMS);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL(SQL_DELETE_ENTRIES);
+
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
+
         onCreate(db);
 
     }
@@ -94,31 +96,22 @@ public class MyDB extends SQLiteOpenHelper {
         contentValues.put(COLOUMN_TWO, value);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(TABLE_PRODUCT, null, contentValues);
+        long newRowId = db.insert(TABLE_ITEMS, null, contentValues);
 
     }
 
     //adding  information to the database
-    public void insertproducts(int value, int value1,int value2, int value3) {
-
-
+    public void insertITEMS(int pro_id,int value,int value1,int value2,int value3) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues contentValues = new ContentValues();
-
-
-
         try {
-
-
+            contentValues.put(COLUMN_ONE, pro_id);
             contentValues.put(COLUMN_TWO, value);
             contentValues.put(COLUMN_THREE, value1);
             contentValues.put(COLUMN_FOUR, value2);
             contentValues.put(COLUMN_FIVE,value3);
-
-
-                db.insertOrThrow(TABLE_NAME, null, contentValues);
+            db.insertOrThrow(TABLE_ITEMS, null, contentValues);
             }
          catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +156,7 @@ public class MyDB extends SQLiteOpenHelper {
         };
 
         Cursor cursor = db.query(
-                TABLE_NAME,
+                TABLE_ITEMS,
                 projection,
                 null,
                 null,

@@ -92,11 +92,11 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
 
 
-            //startActivity(new Intent(LoginActivity.this, LocationActivity.class));
+            startActivity(new Intent(LoginActivity.this, LocationActivity.class));
 
-            Intent myIntent = new Intent(context,LocationActivity.class);
-            myIntent.putExtra("Agent_ID",cursor.getInt(0));
-            startActivity(myIntent);
+//            Intent myIntent = new Intent(context,LocationActivity.class);
+//            myIntent.putExtra("Agent_ID",cursor.getInt(0));
+//            startActivity(myIntent);
 
 
         }
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             //passing the agent id to the location
                             Intent myIntent = new Intent(context, LocationActivity.class);
-                            myIntent.putExtra("Employee_id", Integer.parseInt(id));
+                            //myIntent.putExtra("Employee_id", Integer.parseInt(id));
                             startActivity(myIntent);
 
 //                            Intent intent = new Intent(context,LocationActivity.class);
