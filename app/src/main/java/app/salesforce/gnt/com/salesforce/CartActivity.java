@@ -34,40 +34,18 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     CartAdapter mcartAdapter;
     Button btn_proceedCart;
-
     ArrayList<Cart> cartArrayList = new ArrayList<>();
     ArrayList<Product> products, updatedProducts;
-//    private static RecyclerView.State mBundleRecyclerViewState;
-//    private final String KEY_RECYCLER_STATE = "recycler_state";
-
-
     Context context;
-
-
-
     MyDB db;
-
-    CartDB db1;
-
     public Cursor cursor;
-
-
-    LinearLayoutManager linearLayoutManager;
-
     public static final String KEY_OUTLET_ID = "outlet_id";
     public static final String KEY_AGENT_ID = "employee_id";
     public static final String KEY_id = "id";
     public static final String KEY_quantity = "q";
     public static final String KEY_total = "total";
-
-    private String name;
-    private String quantity;
-
     int position;
-    int agent_id;
-
     Product P;
-
     int agent;
 
     @Override
@@ -76,29 +54,19 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         setTitle("Cart");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         products = new OrderActivity().products;
-
-
         updatedProducts = new ArrayList<>();
-
-
         context = this;
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_simple_cart);
         btn_proceedCart = (Button) findViewById(R.id.btn_proceed_cart);
-
 
         //getting outlet id
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             position = extras.getInt("Outletid");
 
-
             Log.d("newOutlet", String.valueOf(position));
         }
-
-        // db1.insertData(String.valueOf(position));
-
 
     }
 
@@ -110,33 +78,25 @@ public class CartActivity extends AppCompatActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
         db = new MyDB(this);
         cursor = db.getData();
-
         if (cursor.moveToFirst()) {
 
             agent = cursor.getInt(0);
         }
 
-
         addToCart();
-
         btn_proceedCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 try {
                     for (int i = 0; i < updatedProducts.size(); i++) {
                         int id = updatedProducts.get(i).getId();
                         int quantity = updatedProducts.get(i).getQuantity();
-                        int price = updatedProducts.get(i).getPrice();
-                        db.insertITEMS(i,position,id,quantity,price);
-                    }
-                    Cursor cursor1 = db.getProducts();
-                    while (cursor1.moveToFirst()) {
-                        Log.d("Inserted", String.valueOf(cursor1.getColumnCount()));
+                        int price = updatedProducts.get(i).getPrice() * quantity;
+                        Log.d("Price Is ", String.valueOf(price));
+                        db.insertITEMS(position, id, quantity, price);
+
                     }
 
                 } catch (Exception e) {
@@ -146,11 +106,9 @@ public class CartActivity extends AppCompatActivity {
                 proceedToCart();
 
                 btn_proceedCart.setVisibility(View.GONE);
-                //Toast.makeText(context, "Employee id is:" + agent + "Outlet Id is: " + position, Toast.LENGTH_LONG).show();
-
-
             }
         });
+
 
     }
 
@@ -158,8 +116,6 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-
     }
 
 
@@ -168,20 +124,16 @@ public class CartActivity extends AppCompatActivity {
         super.onRestart();
     }
 
-
     public void addToCart() {
         for (int i = 0; i < products.size(); i++) {
-
 
             P = products.get(i);
             if (P.quantity > 0) {
                 updatedProducts.add(P);
 
-
                 int id = P.id;
                 int quantity = P.quantity;
                 int price = P.price * P.quantity;
-
 
                 Log.d("Data id:", String.valueOf(id));
                 Log.d("Data quantity:", String.valueOf(quantity));
@@ -198,7 +150,6 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
-
 
     public void proceedToCart() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);

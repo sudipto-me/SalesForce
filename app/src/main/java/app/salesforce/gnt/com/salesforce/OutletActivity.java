@@ -31,21 +31,9 @@ public class OutletActivity extends AppCompatActivity {
     OutletAdapter myOutletAdapter;
     public static ArrayList<Outlet> mOutletList = new ArrayList<>();
     Context context;
-
     public static final String KEY_USER_ID = "emp_id";
     public static final String KEY_LOCATION_ID = "location_id";
-
-    public static final String KEY_ID = "outlet_id";
-    public static final String KEY_NAME = "outlet_name";
-
     Outlet outlet;
-
-    private String userid;
-    private String locationid;
-
-    private String id;
-    private String name;
-
     Bundle extra;
     int employee_id;
 
@@ -54,22 +42,11 @@ public class OutletActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet);
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         context = this;
 
         recyclerView = (RecyclerView) findViewById(R.id.rv_outlet_name);
-
-
-//        Bundle extras = getIntent().getExtras();
-//        if (extras != null) {
-//            int employee_id = extras.getInt("Employee id");
-//            Log.d("Employee id", String.valueOf(employee_id));
-//
-//
-//        }
 
     }
 
@@ -94,8 +71,6 @@ public class OutletActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, OrderActivity.class);
-
-
 
                 intent.putExtra("id", outlet.getId());//sending outlet id
 

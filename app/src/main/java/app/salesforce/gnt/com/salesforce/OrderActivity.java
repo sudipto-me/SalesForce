@@ -2,6 +2,8 @@ package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -43,10 +45,17 @@ public class OrderActivity extends AppCompatActivity {
 
     int id;
 
+    MyDB db;
+
+
     private static RecyclerView.State mBundleRecyclerViewState;
     private final String KEY_RECYCLER_STATE = "recycler_state";
 
     LinearLayoutManager linearLayoutManager;
+
+    Cursor cursor;
+
+    int position;
 
 
     @Override
@@ -55,15 +64,43 @@ public class OrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         clickedOutlet = new OutletActivity().mOutletList;
         outlets = new ArrayList<>();
-
+        db = new MyDB(this);
         context = this;
         recyclerView = (RecyclerView) findViewById(R.id.rv_product_list);
         btn_showCart = (Button) findViewById(R.id.btn_show_cart);
         myAdapter = new OrderAdapter(OrderActivity.this, products);
-        int position;
+
+        //cursor = db.getProducts();
+        Cursor newProduycts = db.getProducts();
+        if (newProduycts.moveToFirst()){
+            //Log.d("Value",String.valueOf(db.getProducts()));
+            db.DataChecking(String.valueOf(position));
+            Log.d("Value",String.valueOf(newProduycts.getString(0)));
+        }
+
+//        if (newProduycts.getColumnCount()>0){
+//                while (newProduycts.moveToNext()){
+//
+//                    Log.d("Value", String.valueOf(newProduycts));
+//
+//
+//
+//                }
+//                cursor.close();
+//        }
+
+
+
+//            String log = "Out_id:"+newProduycts.getColumnIndex("out_id")+" ,Product id"+newProduycts.getColumnIndex("product_id")+" ,Product Quantity"+newProduycts.getColumnIndex("product_quantity")
+//                    +" ,Product Price"+newProduycts.getColumnIndex("product_price");
+//
+//            Log.d("Value",log);
+
+
+
+
 
     }
 
@@ -77,6 +114,49 @@ public class OrderActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         if (!(products.size() >0)) {
             sendRequestforProducts();
+
+            //if (cursor.moveToFirst()){
+
+//                if(position==cursor.getColumnIndex("out_id")) {
+//
+//                    int value = cursor.getColumnIndex("out_id");
+//                    Log.d("Value", String.valueOf(value));
+//                }
+
+                db.getProducts();
+
+
+
+
+//                db.DataChecking(String.valueOf(position));
+//                //Log.d("Myid",String.valueOf(position));
+//                Log.d("Value", String.valueOf(cursor.getColumnIndex(String.valueOf(1))));
+//                if (true){
+//                    for(int i=0;i<products.size();i++){
+//                        Product P = products.get(i);
+//                        P.quantity = cursor.getColumnIndex("product_quantity");
+//                    }
+
+
+
+
+            //}
+            //            if (cursor.moveToFirst()){
+//                if(cursor.getColumnIndex("out_id") == position){
+//
+//                    for (int i=0;i<products.size();i++){
+//                        Product P = products.get(i);
+//                        //P.id = cursor.getColumnIndex("product_id");
+//                        P.quantity = cursor.getColumnIndex("product_quantity");
+//                    }
+//                }
+//            }
+//            else{
+//                products.clear();
+//                sendRequestforProducts();
+//            }
+
+
         }else {
             recyclerView.setAdapter(myAdapter);
             myAdapter.notifyDataSetChanged();
@@ -100,14 +180,11 @@ public class OrderActivity extends AppCompatActivity {
 
                 }
 
-
-
-
                 Intent cartIntent = new Intent(context, CartActivity.class);
                 //getting outlet id
                 Bundle extras = getIntent().getExtras();
                 if(extras!=null){
-                   int  position = extras.getInt("id");
+                     position = extras.getInt("id");
 
                     cartIntent.putExtra("Outletid",position);
                     Log.d("outletid", String.valueOf(position));
@@ -210,6 +287,8 @@ public class OrderActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
 }

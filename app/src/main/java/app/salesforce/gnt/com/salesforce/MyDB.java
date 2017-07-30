@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -18,23 +19,23 @@ public class MyDB extends SQLiteOpenHelper {
 
 
     //database version
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 1;
     //database name
-    private static final String DATABASE_NAME = "Inforce.db";
+    private static final String DATABASE_NAME = "inforce";
     //employee table name
     private static final String TABLE_NAME = "employee";
     //columns name
     private static final String COLOUMN_ONE = "id";
     private static final String COLOUMN_TWO = "value";
 
-    //product table
-    private static final String TABLE_ITEMS = "item";
+    //    //product table
+    private static final String table_item = "table_item";
     //columns name
-    private static final String COLUMN_ONE = "id";
-    private static final String COLUMN_TWO = "value";
-    private static final String COLUMN_THREE = "product_id";
-    private static final String COLUMN_FOUR = "product_quantity";
-    private static final String COLUMN_FIVE = "product_price";
+//    private static final String COLUMN_ONE = "id";
+//    private static final String COLUMN_TWO = "value";
+//    private static final String COLUMN_THREE = "pid";
+//    private static final String COLUMN_FOUR = "quantity";
+//    private static final String COLUMN_FIVE = "price";
 
 
     //table query
@@ -42,16 +43,23 @@ public class MyDB extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_NAME + " (" +
                     COLOUMN_ONE + " INTEGER PRIMARY KEY," +
                     COLOUMN_TWO + " TEXT)";
-    //new table
-    private static final String SQL_CREATE_ITEMS = "CREATE TABLE ITEMS (" + COLUMN_ONE + "INTEGER PRIMARY KEY," +
-            COLUMN_TWO + "TEXT" +
-            COLUMN_THREE + "TEXT" +
-            COLUMN_FOUR + "TEXT" +
-            COLUMN_FIVE + "TEXT)";
+    //    //new table
+//    private static final String SQL_CREATE_ITEMS = "CREATE TABLE " + TABLE_ITEMS + "(" +
+//            COLUMN_ONE + " INTEGER PRIMARY KEY AUTOINCREMENT ," +
+//            COLUMN_TWO + " INTEGER, " +
+//            COLUMN_THREE + " INTEGER, " +
+//            COLUMN_FOUR + " INTEGER, " +
+//            COLUMN_FIVE + " INTEGER)";
+//
+    private static final String SQL_CREATE_ITEMS = "CREATE TABLE table_item (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            " out_id INTEGER," +
+            " product_id INTEGER," +
+            " product_quantity INTEGER," +
+            " product_price INTEGER)";
 
 
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + TABLE_NAME;
+//    private static final String SQL_DELETE_ENTRIES =
+//            "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
     public MyDB(Context context) {
@@ -61,27 +69,24 @@ public class MyDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //--------------Creating tables------------------
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_ITEMS);
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITEMS);
-
+        db.execSQL("DROP TABLE IF EXISTS " + table_item);
         onCreate(db);
 
     }
 
-    public Cursor checkTable(SQLiteDatabase db) {
-
-        Cursor cursor = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_NAME + "'", null);
-        return cursor;
-    }
+//    public Cursor checkTable(SQLiteDatabase db) {
+//
+//        Cursor cursor = db.rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name = '" + TABLE_NAME + "'", null);
+//        return cursor;
+//    }
 
 
     //adding single employee id to the database
@@ -96,24 +101,23 @@ public class MyDB extends SQLiteOpenHelper {
         contentValues.put(COLOUMN_TWO, value);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(TABLE_ITEMS, null, contentValues);
+        db.insert(TABLE_NAME, null, contentValues);
 
     }
 
-    //adding  information to the database
-    public void insertITEMS(int pro_id,int value,int value1,int value2,int value3) {
+    //    //adding  information to the database
+    public void insertITEMS(int value, int value1, int value2, int value3) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         try {
-            contentValues.put(COLUMN_ONE, pro_id);
-            contentValues.put(COLUMN_TWO, value);
-            contentValues.put(COLUMN_THREE, value1);
-            contentValues.put(COLUMN_FOUR, value2);
-            contentValues.put(COLUMN_FIVE,value3);
-            db.insertOrThrow(TABLE_ITEMS, null, contentValues);
-            }
-         catch (Exception e) {
+//            contentValues.put(COLUMN_ONE, pro_id);
+            contentValues.put("out_id", value);
+            contentValues.put("product_id", value1);
+            contentValues.put("product_quantity", value2);
+            contentValues.put("product_price", value3);
+            db.insert(table_item, null, contentValues);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -142,21 +146,21 @@ public class MyDB extends SQLiteOpenHelper {
         return cursor;
     }
 
-    //getting information from the database
+    //    //getting information from the database
     public Cursor getProducts() {
         SQLiteDatabase db = this.getReadableDatabase();
         // Define a projection that specifies which columns from the database
 // you will actually use after this query.
         String[] projection = {
-                COLUMN_ONE,
-                COLUMN_TWO,
-                COLUMN_THREE,
-                COLUMN_FOUR,
-                COLUMN_FIVE
+                "out_id",
+                "product_id",
+                " product_quantity",
+                " product_price"
+
         };
 
         Cursor cursor = db.query(
-                TABLE_ITEMS,
+                table_item,
                 projection,
                 null,
                 null,
@@ -167,6 +171,31 @@ public class MyDB extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+public boolean DataChecking(String id){
+    SQLiteDatabase db = this.getReadableDatabase();
+    String selectQuery = "SELECT * FROM  table_item  WHERE out_id=?"  ;
+
+    Cursor cursor = db.rawQuery(selectQuery,new String[] {id});
+
+    if (cursor.moveToFirst()){
+        String outlet_id = cursor.getString(cursor.getColumnIndex("out_id"));
+        Log.d("Value1",outlet_id);
+    }
+
+    if (cursor!=null)
+    {
+        Log.d("Found",db.toString());
+       return true;
+    }
+    else {
+        Log.d("Not Found",toString());
+        return false;
+    }
+
+
+
+}
 
 
 }
