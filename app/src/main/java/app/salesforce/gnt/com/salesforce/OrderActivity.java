@@ -33,28 +33,14 @@ public class OrderActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     OrderAdapter myAdapter;
     public static ArrayList<Product> products = new ArrayList<>();
-
-    ArrayList<Outlet>outlets,clickedOutlet;
-
-
+    ArrayList<Outlet> outlets, clickedOutlet;
     public static final String KEY_ID = "product_id";
     public static final String KEY_NAME = "product_name";
     Product product;
-
     Outlet outlet;
-
     int id;
-
     MyDB db;
-
-
-    private static RecyclerView.State mBundleRecyclerViewState;
-    private final String KEY_RECYCLER_STATE = "recycler_state";
-
     LinearLayoutManager linearLayoutManager;
-
-    Cursor cursor;
-
     int position;
 
 
@@ -72,36 +58,6 @@ public class OrderActivity extends AppCompatActivity {
         btn_showCart = (Button) findViewById(R.id.btn_show_cart);
         myAdapter = new OrderAdapter(OrderActivity.this, products);
 
-        //cursor = db.getProducts();
-        Cursor newProduycts = db.getProducts();
-        if (newProduycts.moveToFirst()){
-            //Log.d("Value",String.valueOf(db.getProducts()));
-            db.DataChecking(String.valueOf(position));
-            Log.d("Value",String.valueOf(newProduycts.getString(0)));
-        }
-
-//        if (newProduycts.getColumnCount()>0){
-//                while (newProduycts.moveToNext()){
-//
-//                    Log.d("Value", String.valueOf(newProduycts));
-//
-//
-//
-//                }
-//                cursor.close();
-//        }
-
-
-
-//            String log = "Out_id:"+newProduycts.getColumnIndex("out_id")+" ,Product id"+newProduycts.getColumnIndex("product_id")+" ,Product Quantity"+newProduycts.getColumnIndex("product_quantity")
-//                    +" ,Product Price"+newProduycts.getColumnIndex("product_price");
-//
-//            Log.d("Value",log);
-
-
-
-
-
     }
 
 
@@ -112,52 +68,12 @@ public class OrderActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        if (!(products.size() >0)) {
+
+        if (!(products.size() > 0)) {
             sendRequestforProducts();
 
-            //if (cursor.moveToFirst()){
 
-//                if(position==cursor.getColumnIndex("out_id")) {
-//
-//                    int value = cursor.getColumnIndex("out_id");
-//                    Log.d("Value", String.valueOf(value));
-//                }
-
-                db.getProducts();
-
-
-
-
-//                db.DataChecking(String.valueOf(position));
-//                //Log.d("Myid",String.valueOf(position));
-//                Log.d("Value", String.valueOf(cursor.getColumnIndex(String.valueOf(1))));
-//                if (true){
-//                    for(int i=0;i<products.size();i++){
-//                        Product P = products.get(i);
-//                        P.quantity = cursor.getColumnIndex("product_quantity");
-//                    }
-
-
-
-
-            //}
-            //            if (cursor.moveToFirst()){
-//                if(cursor.getColumnIndex("out_id") == position){
-//
-//                    for (int i=0;i<products.size();i++){
-//                        Product P = products.get(i);
-//                        //P.id = cursor.getColumnIndex("product_id");
-//                        P.quantity = cursor.getColumnIndex("product_quantity");
-//                    }
-//                }
-//            }
-//            else{
-//                products.clear();
-//                sendRequestforProducts();
-//            }
-
-
-        }else {
+        } else {
             recyclerView.setAdapter(myAdapter);
             myAdapter.notifyDataSetChanged();
         }
@@ -175,7 +91,7 @@ public class OrderActivity extends AppCompatActivity {
 
                     Log.d("Product ids", " = " + p.id);
                     Log.d("Products quantity", "=" + p.quantity);
-                    Log.d("Products Price","="+(p.price*p.quantity));
+                    Log.d("Products Price", "=" + (p.price * p.quantity));
 
 
                 }
@@ -183,10 +99,10 @@ public class OrderActivity extends AppCompatActivity {
                 Intent cartIntent = new Intent(context, CartActivity.class);
                 //getting outlet id
                 Bundle extras = getIntent().getExtras();
-                if(extras!=null){
-                     position = extras.getInt("id");
+                if (extras != null) {
+                    position = extras.getInt("id");
 
-                    cartIntent.putExtra("Outletid",position);
+                    cartIntent.putExtra("Outletid", position);
                     Log.d("outletid", String.valueOf(position));
                 }
                 startActivity(cartIntent);
@@ -202,18 +118,12 @@ public class OrderActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onResume() {
         super.onResume();
 
 
     }
-
-//    public void setItems(List objects){
-//        myAdapter.set
-//    }
-
 
     public void sendRequestforProducts() {
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -254,14 +164,14 @@ public class OrderActivity extends AppCompatActivity {
                                     product.quantity = jsonObject.getInt("quantity");
                                 }
 
-                                if(!jsonObject.isNull("price")){
+                                if (!jsonObject.isNull("price")) {
                                     product.price = jsonObject.getInt("price");
                                 }
 
                                 products.add(i, product);
 
                                 Log.d("Message", String.valueOf(product.id));
-                                Log.d("Price",String.valueOf(product.price));
+                                Log.d("Price", String.valueOf(product.price));
 
 
                             }
@@ -289,7 +199,47 @@ public class OrderActivity extends AppCompatActivity {
     }
 
 
-
-
 }
+
+/*
+
+ @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("Restart Called", toString());
+        Cursor cursor = db.getProducts();
+        db.DataChecking(position);
+        if (cursor.moveToFirst()) {
+            Log.d("Found", "Got Value");
+        } else {
+            Log.d("Empty", toString());
+        }
+
+    }
+        //cursor = db.getProducts();
+//        Cursor newProduycts = db.getProducts();
+//        if (newProduycts.moveToFirst()){
+//            //Log.d("Value",String.valueOf(db.getProducts()));
+//            db.DataChecking(position);
+//            //Log.d("Value",String.valueOf(newProduycts.getString(newProduycts.getColumnIndex("out_id"))));
+//        }
+//        newProduycts.close();
+
+//        if (newProduycts.getColumnCount()>0){
+//                while (newProduycts.moveToNext()){
+//
+//                    Log.d("Value", String.valueOf(newProduycts));
+//
+//
+//
+//                }
+//                cursor.close();
+//        }
+
+
+//            String log = "Out_id:"+newProduycts.getColumnIndex("out_id")+" ,Product id"+newProduycts.getColumnIndex("product_id")+" ,Product Quantity"+newProduycts.getColumnIndex("product_quantity")
+//                    +" ,Product Price"+newProduycts.getColumnIndex("product_price");
+//
+//            Log.d("Value",log);
+ */
 

@@ -172,30 +172,34 @@ public class MyDB extends SQLiteOpenHelper {
         return cursor;
     }
 
-public boolean DataChecking(String id){
-    SQLiteDatabase db = this.getReadableDatabase();
-    String selectQuery = "SELECT * FROM  table_item  WHERE out_id=?"  ;
+    public Cursor DataChecking(int outletid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selectQuery = "SELECT * FROM  table_item  WHERE out_id = " + outletid;
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-    Cursor cursor = db.rawQuery(selectQuery,new String[] {id});
+        return cursor;
 
-    if (cursor.moveToFirst()){
-        String outlet_id = cursor.getString(cursor.getColumnIndex("out_id"));
-        Log.d("Value1",outlet_id);
-    }
-
-    if (cursor!=null)
-    {
-        Log.d("Found",db.toString());
-       return true;
-    }
-    else {
-        Log.d("Not Found",toString());
-        return false;
     }
 
 
 
-}
+//        if (cursor != null) {
+//           while( cursor.moveToFirst()){
+//            String outlet_id = cursor.getString(0);
+//            Log.d("Value", outlet_id);}
+//
+//            Log.d("Found", toString());
+//            cursor.close();
+//            return true;
+//        } else {
+//            Log.d("Value","not found");
+//            Log.d("Not Found", toString());
+//            return false;
+//        }
 
 
-}
+
+    }
+
+
+

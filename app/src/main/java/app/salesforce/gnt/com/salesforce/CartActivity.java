@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,6 +35,7 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     CartAdapter mcartAdapter;
     Button btn_proceedCart;
+    TextView tv_Total_price;
     ArrayList<Cart> cartArrayList = new ArrayList<>();
     ArrayList<Product> products, updatedProducts;
     Context context;
@@ -59,6 +61,7 @@ public class CartActivity extends AppCompatActivity {
         context = this;
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_simple_cart);
         btn_proceedCart = (Button) findViewById(R.id.btn_proceed_cart);
+        tv_Total_price = (TextView) findViewById(R.id.tv_total_price);
 
         //getting outlet id
         Bundle extras = getIntent().getExtras();
@@ -78,6 +81,7 @@ public class CartActivity extends AppCompatActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        updatedProducts.clear();
         db = new MyDB(this);
         cursor = db.getData();
         if (cursor.moveToFirst()) {
@@ -86,6 +90,9 @@ public class CartActivity extends AppCompatActivity {
         }
 
         addToCart();
+
+        TotalPrice();
+
         btn_proceedCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +113,9 @@ public class CartActivity extends AppCompatActivity {
                 proceedToCart();
 
                 btn_proceedCart.setVisibility(View.GONE);
+                tv_Total_price.setVisibility(View.GONE);
+
+
             }
         });
 
@@ -115,6 +125,7 @@ public class CartActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
         super.onResume();
     }
 
@@ -135,6 +146,7 @@ public class CartActivity extends AppCompatActivity {
                 int quantity = P.quantity;
                 int price = P.price * P.quantity;
 
+
                 Log.d("Data id:", String.valueOf(id));
                 Log.d("Data quantity:", String.valueOf(quantity));
                 Log.d("Data Price", String.valueOf(price));
@@ -151,6 +163,19 @@ public class CartActivity extends AppCompatActivity {
 
     }
 
+    public void TotalPrice() {
+        int TotalPrice = 0;
+        for (int i = 0; i < updatedProducts.size(); i++) {
+            int quantity = updatedProducts.get(i).getQuantity();
+            int price = quantity * updatedProducts.get(i).getPrice();
+
+            TotalPrice = TotalPrice + price;
+        }
+
+        Log.d("New", "Price" + TotalPrice);
+        tv_Total_price.setText(" Total: " + TotalPrice);
+    }
+
     public void proceedToCart() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String cart_url = "http://inbackoffice.com/app/inforce/place_order.php";
@@ -160,6 +185,7 @@ public class CartActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         btn_proceedCart.setVisibility(View.VISIBLE);
+                        tv_Total_price.setVisibility(View.VISIBLE);
                         Log.d("Cart", "" + response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -195,6 +221,7 @@ public class CartActivity extends AppCompatActivity {
                 params.put(KEY_OUTLET_ID, String.valueOf(position));
                 params.put(KEY_total, String.valueOf(updatedProducts.size()));
                 for (int i = 0; i < updatedProducts.size(); i++) {
+
                     params.put(KEY_id + "_" + i, String.valueOf(updatedProducts.get(i).getId()));
                     params.put(KEY_quantity + "_" + i, String.valueOf(updatedProducts.get(i).getQuantity()));
                 }

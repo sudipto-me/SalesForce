@@ -14,8 +14,8 @@
         android:background="@color/cardview_shadow_end_color"
         android:foreground="@color/cardview_shadow_end_color"
         android:padding="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="30dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="5dp"
         card_view:cardUseCompatPadding="true">
 
         <LinearLayout
