@@ -18,9 +18,9 @@ import java.util.StringTokenizer;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     Context context;
-    public List<Product>mCartList;
+    public List<Product> mCartList;
 
-    public CartAdapter(Context context, ArrayList<Product> mCartList){
+    public CartAdapter(Context context, ArrayList<Product> mCartList) {
         this.context = context;
         this.mCartList = mCartList;
     }
@@ -28,7 +28,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartview,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cartview, parent, false);
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }
@@ -36,10 +36,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Product cart = mCartList.get(position);
-        holder.tv_productId.setText(String.valueOf(cart.getId()));
+        //holder.tv_productId.setText(String.valueOf(cart.getId()));
         holder.tv_productName.setText(cart.getName());
         holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
-        holder.tv_price.setText(String.valueOf(cart.getQuantity()*cart.getPrice()));
+        holder.tv_price.setText(String.valueOf(cart.getPrice()));
 
     }
 
@@ -48,19 +48,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         return mCartList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tv_productId,tv_productName,tv_ProductQuantity,tv_quantity,tv_product_price,tv_price;
+        public TextView tv_productId, tv_productName, tv_ProductQuantity, tv_quantity, tv_product_price, tv_price, tv_taka;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            tv_productId = (TextView)itemView.findViewById(R.id.tv_Product_ID);
-            tv_productName = (TextView)itemView.findViewById(R.id.tv_product_name);
-            tv_ProductQuantity = (TextView)itemView.findViewById(R.id.tv_Product_Quantity);
-            tv_quantity = (TextView)itemView.findViewById(R.id.tv_Quanitity);
-            tv_product_price = (TextView)itemView.findViewById(R.id.tv_Product_Price);
-            tv_price = (TextView)itemView.findViewById(R.id.tv_Price);
+            //tv_productId = (TextView)itemView.findViewById(R.id.tv_Product_ID);
+            tv_productName = (TextView) itemView.findViewById(R.id.tv_product_name);
+            tv_ProductQuantity = (TextView) itemView.findViewById(R.id.tv_Product_Quantity);
+            tv_quantity = (TextView) itemView.findViewById(R.id.tv_Quanitity);
+            //tv_product_price = (TextView)itemView.findViewById(R.id.tv_Product_Price);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_Price);
+
         }
     }
 }

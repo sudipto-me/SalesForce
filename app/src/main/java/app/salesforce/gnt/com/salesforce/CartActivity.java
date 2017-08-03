@@ -173,7 +173,7 @@ public class CartActivity extends AppCompatActivity {
         }
 
         Log.d("New", "Price" + TotalPrice);
-        tv_Total_price.setText(" Total: " + TotalPrice);
+        tv_Total_price.setText(TotalPrice+"Taka");
     }
 
     public void proceedToCart() {
@@ -224,6 +224,7 @@ public class CartActivity extends AppCompatActivity {
 
                     params.put(KEY_id + "_" + i, String.valueOf(updatedProducts.get(i).getId()));
                     params.put(KEY_quantity + "_" + i, String.valueOf(updatedProducts.get(i).getQuantity()));
+                    
                 }
                 Log.d("Params", params.toString());
                 return params;

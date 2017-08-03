@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">SalesForce</string>
+    <string name="sign_in">Sign In</string>
+    <string name="location_name">LocationName</string>
+    <string name="outlet_name_in_outlet_activity">Name:</string>
+    <string name="outlet_name_out_act">Name:</string>
+    <string name="show_cart_btn_in_order_Activity">Show Cart</string>
+    <string name="product_id_in_order">ID</string>
+    <string name="productname_in_order_activity">ProductName</string>
+    <string name="quantity_in_order_activity">0</string>
+    <string name="subtotal_in_cart_activity">Subtotal</string>
+    <string name="total_price_in_cart_activity">Total Price:</string>
+    <string name="proceed_to_checkout_in_cart_acrtvity">Proceed to Checkout</string>
+    <string name="product_name_in_cart_activity">Name</string>
+    <string name="price_per_unit_in_cart_activity">Price Per Unit</string>
+    <string name="product_quantity_in_cart_activity">Quantity</string>
+    <string name="product_price_in_cart_activity">0</string>
+    <string name="currency_in_cart_activity">Taka</string>
 </resources>

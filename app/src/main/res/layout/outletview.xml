@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name:"
+                android:text="@string/outlet_name_in_outlet_activity"
                 android:layout_weight="1"
                 android:layout_gravity="center"
                 android:textSize="30sp"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Name:"
+                android:text="@string/outlet_name_out_act"
                 android:layout_marginRight="8dp"
                 android:textColor="#3F51B5"
                 android:textSize="25sp"
