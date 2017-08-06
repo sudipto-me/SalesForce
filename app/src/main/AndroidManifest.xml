@@ -46,7 +46,8 @@
             android:name=".CartActivity"
             android:label="Cart"
             android:parentActivityName=".OrderActivity" />
-        <activity android:name=".BillCollection"></activity>
+        <activity android:name=".BillCollection" />
+        <activity android:name=".PaymentActivity"></activity>
     </application>
 
 </manifest>

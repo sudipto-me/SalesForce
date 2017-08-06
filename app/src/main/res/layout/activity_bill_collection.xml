@@ -7,11 +7,57 @@
     android:orientation="vertical"
     tools:context="app.salesforce.gnt.com.salesforce.BillCollection">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_Date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="3"
+            android:text="@string/Header_Date"
+            android:textColor="#424242"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/Header_Amount"
+            android:textColor="#424242"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#000000" />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_bill_collection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="5">
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="6">
 
 
     </android.support.v7.widget.RecyclerView>
@@ -19,9 +65,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:weightSum="3">
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,20 +77,31 @@
             android:orientation="vertical"
             android:weightSum="3">
 
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:background="#000000" />
+
             <TextView
                 android:id="@+id/tv_Total_Bill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:text="Total Bill"
+                android:gravity="center"
+                android:text="@string/total_bill_in_billCollection"
                 android:textAlignment="center"
                 android:textColor="#424242"
                 android:textSize="25sp"
-                android:gravity="center"
                 android:textStyle="bold" />
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/tv_Total_Pay"
@@ -51,12 +109,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:text="Total Pay"
                 android:gravity="center"
+                android:text="@string/total_pay_in_billCollection"
                 android:textAlignment="center"
                 android:textColor="#424242"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/tv_due"
@@ -64,12 +128,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:text="Total Due"
                 android:gravity="center"
+                android:text="@string/total_due_in_billCollection"
                 android:textAlignment="center"
                 android:textColor="#424242"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginStart="5dp"/>
 
         </LinearLayout>
 
@@ -79,6 +149,12 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginRight="5dp"
+                android:background="#000000" />
+
             <TextView
                 android:id="@+id/tv_bill"
                 android:layout_width="match_parent"
@@ -87,11 +163,17 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="1"
-                android:text="1000"
+                android:text="@string/total_bill_showing_billCollection"
                 android:textAlignment="center"
                 android:textColor="#424242"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginEnd="5dp"/>
 
             <TextView
                 android:id="@+id/tv_pay"
@@ -99,11 +181,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:text="500"
+                android:text="@string/total_pay_showing_billCollection"
                 android:textAlignment="center"
                 android:textColor="#424242"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginEnd="5dp"/>
 
             <TextView
                 android:id="@+id/tv_Total_Due"
@@ -111,11 +199,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_weight="1"
-                android:text="500"
+                android:text="@string/total_due_showing_billCollection"
                 android:textAlignment="center"
                 android:textColor="#424242"
                 android:textSize="25sp"
                 android:textStyle="bold" />
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"
+                android:layout_marginEnd="5dp"/>
 
         </LinearLayout>
 
@@ -131,12 +225,10 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="5dp"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:fontFamily="monospace"
-        android:text="Payment"
-        android:textSize="20sp"
-
-        />
+        android:text="@string/payment_button_in_billCollection"
+        android:textSize="20sp" />
 
 
 </LinearLayout>

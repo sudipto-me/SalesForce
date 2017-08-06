@@ -1,6 +1,7 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import java.util.List;
 public class BillCollection extends AppCompatActivity {
 
     public TextView tv_total_bill,tv_total_pay,tv_total_due;
+    public TextView tv_date,tv_amount;
     public Button btn_payment;
     public RecyclerView rv_billcollection;
     public BillCollectionAdapter billCollectionAdapter;
@@ -27,6 +29,9 @@ public class BillCollection extends AppCompatActivity {
         setContentView(R.layout.activity_bill_collection);
 
         context = this;
+
+        tv_date = (TextView)findViewById(R.id.tv_Date);
+        tv_amount = (TextView)findViewById(R.id.tv_Amount);
 
         tv_total_bill = (TextView)findViewById(R.id.tv_Total_Bill);
         tv_total_due = (TextView)findViewById(R.id.tv_Total_Due);
@@ -43,6 +48,8 @@ public class BillCollection extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context,"Go to the Payment method",Toast.LENGTH_SHORT).show();
+                Intent paymentIntent = new Intent(context,PaymentActivity.class);
+                startActivity(paymentIntent);
             }
         });
 

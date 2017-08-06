@@ -16,4 +16,23 @@
     <string name="product_quantity_in_cart_activity">Quantity</string>
     <string name="product_price_in_cart_activity">0</string>
     <string name="currency_in_cart_activity">Taka</string>
+    <string name="Header_Date">Date</string>
+    <string name="Header_Amount">Amount</string>
+    <string name="total_bill_in_billCollection">Total Bill</string>
+    <string name="total_pay_in_billCollection">Total Pay</string>
+    <string name="total_due_in_billCollection">Total Due</string>
+    <string name="total_bill_showing_billCollection">1000</string>
+    <string name="total_pay_showing_billCollection">500</string>
+    <string name="total_due_showing_billCollection">500</string>
+    <string name="payment_button_in_billCollection">Payment</string>
+    <string name="money_in_payment_activity">Money</string>
+    <string name="amount_to_be_paid_hint_in_activty_payment">Amount to be paid</string>
+    <string name="total_paid_in_activity_payment">Total Paid:</string>
+    <string name="total_due_in_activity_payment">Total Due:</string>
+    <string name="outlet_id_in_payment_activity">Outlet ID:</string>
+    <string name="outlet_name_in_payment_activity">Outlet Name:</string>
+    <string name="outlet_area_in_payment_activity">Outlet Area:</string>
+    <string name="make_paymentbtn_in_apyment_activity">Make Payment</string>
+    <string name="date_format_in_billView">01-08-17</string>
+    <string name="amount_format_in_billView">1000</string>
 </resources>
