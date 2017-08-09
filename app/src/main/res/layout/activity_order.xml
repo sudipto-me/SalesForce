@@ -11,7 +11,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_product_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -22,10 +22,11 @@
     <Button
         android:id="@+id/btn_show_cart"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:layout_margin="16dp"
         android:background="#3F51B5"
-        android:textSize="15sp"
+        android:textSize="20sp"
+        android:textAllCaps="false"
         android:textStyle="normal"
         android:textColor="#ECEFF1"
         android:text="@string/show_cart_btn_in_order_Activity"

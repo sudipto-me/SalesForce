@@ -35,8 +35,9 @@ public class BillCollectionAdapter extends RecyclerView.Adapter<BillCollectionAd
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final BillFormat billFormat = mbillFormats.get(position);
+
         holder.tv_date.setText(billFormat.getDate());
-        holder.tv_amount.setText(billFormat.getAmount());
+        holder.tv_amount.setText(String.valueOf(billFormat.getAmount()));
 
     }
 
@@ -47,12 +48,13 @@ public class BillCollectionAdapter extends RecyclerView.Adapter<BillCollectionAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_date, tv_amount;
+        public TextView tv_date, tv_amount,tv_billID;
 
         public ViewHolder(View itemView) {
             super(itemView);
             tv_date = (TextView) itemView.findViewById(R.id.tv_date);
             tv_amount = (TextView) itemView.findViewById(R.id.tv_amount);
+
         }
     }
 }

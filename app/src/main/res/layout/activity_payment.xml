@@ -9,9 +9,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_weight="5"
         android:orientation="vertical">
 
         <ImageView
@@ -30,12 +29,7 @@
             android:textColor="#212121"
             android:textSize="25sp" />
 
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#01579B" />
+
 
 
         <TextView
@@ -47,14 +41,6 @@
             android:textColor="#212121"
             android:textSize="25sp" />
 
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#01579B" />
-
-
         <TextView
             android:id="@+id/tv_Outlet_Area"
             android:layout_width="match_parent"
@@ -64,45 +50,43 @@
             android:textColor="#212121"
             android:textSize="25sp" />
 
-        <view
+        <TextView
+            android:id="@+id/tv_total_Bill"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#01579B" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/total_bill_in_payment_activity"
+            android:textSize="25sp"
+            android:textColor="#212121"/>
 
     </LinearLayout>
 
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="#01579B" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_weight="1"
+        android:layout_weight="0.26"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_Due"
+        <EditText
+            android:id="@+id/et_Pay_Money"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/total_due_in_activity_payment"
-            android:textColor="#212121"
-            android:textSize="25sp" />
-
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#01579B" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="@string/amount_to_be_paid_hint_in_activty_payment"
+            android:inputType="textPersonName"
+            android:text="@string/money_in_payment_activity"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/currency"
+            />
 
         <TextView
             android:id="@+id/tv_Paid"
@@ -113,44 +97,37 @@
             android:textColor="#212121"
             android:textSize="25sp" />
 
-        <view
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#01579B" />
-
-        <EditText
-            android:id="@+id/et_Pay_Money"
+        <TextView
+            android:id="@+id/tv_Due"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="15dp"
-            android:ems="10"
-            android:hint="@string/amount_to_be_paid_hint_in_activty_payment"
-            android:inputType="textPersonName"
-            android:text="@string/money_in_payment_activity"
-            android:textSize="20sp" />
+            android:layout_margin="8dp"
+            android:text="@string/total_due_in_activity_payment"
+            android:textColor="#212121"
+            android:textSize="25sp" />
+
+
+
+
+
+
 
     </LinearLayout>
 
 
     <Button
         android:id="@+id/btn_make_payment"
+       style="@style/AppTheme.RoundedCornerMaterialButton"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:layout_weight="1.3"
-        android:background="@color/colorPrimary"
         android:fontFamily="monospace"
         android:text="@string/make_paymentbtn_in_apyment_activity"
         android:textAllCaps="false"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold"
-
         />
 
 

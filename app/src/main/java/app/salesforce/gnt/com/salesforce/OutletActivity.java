@@ -36,6 +36,8 @@ public class OutletActivity extends AppCompatActivity {
     Outlet outlet;
     Bundle extra;
     int employee_id;
+    String location_name;
+    int location_id;
 
 
     @Override
@@ -61,19 +63,21 @@ public class OutletActivity extends AppCompatActivity {
         sendRequestForOutlet();
 
         extra = getIntent().getExtras();
-        if(extra!=null){
-            employee_id = extra.getInt("Employee id");
-            Log.d("Fucking id", String.valueOf(employee_id));
+        if (extra != null) {
+            location_id = extra.getInt("location_id");
+            location_name = extra.getString("location_name");
+
+
+            Log.d("Location id", String.valueOf(location_id));
+            Log.d("Location Name", location_name);
         }
+
 
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, OrderActivity.class);
-
-                intent.putExtra("id", outlet.getId());//sending outlet id
-
                 startActivity(intent);
             }
         });
@@ -99,7 +103,7 @@ public class OutletActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.d("Result", response.toString());
+                        Log.d("Result",""+ response);
                         // Toast.makeText(context, "Response" + response, Toast.LENGTH_LONG).show();
 
                         try {
@@ -135,7 +139,7 @@ public class OutletActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        myOutletAdapter = new OutletAdapter(OutletActivity.this, mOutletList);
+                        myOutletAdapter = new OutletAdapter(OutletActivity.this, mOutletList, location_name);
                         recyclerView.setAdapter(myOutletAdapter);
                         myOutletAdapter.notifyDataSetChanged();
 

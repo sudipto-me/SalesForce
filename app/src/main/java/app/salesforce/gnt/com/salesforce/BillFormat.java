@@ -5,15 +5,25 @@ package app.salesforce.gnt.com.salesforce;
  */
 
 public class BillFormat {
+    public int id;
     public String date;
     public int amount;
 
     public BillFormat(){
 
     }
-    public BillFormat(String date,int amount){
+    public BillFormat(int id,String date,int amount){
+        this.id = id;
         this.date = date;
         this.amount = amount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDate() {

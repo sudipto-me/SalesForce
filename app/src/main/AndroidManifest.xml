@@ -9,7 +9,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -38,16 +38,25 @@
             android:name=".OutletActivity"
             android:label="Outlet"
             android:parentActivityName=".LocationActivity" />
+        <activity android:name=".Option"
+            android:label="Option"
+            android:parentActivityName=".OutletActivity"/>
         <activity
             android:name=".OrderActivity"
             android:label="Order"
-            android:parentActivityName=".OutletActivity" />
+            android:parentActivityName=".Option" />
         <activity
             android:name=".CartActivity"
             android:label="Cart"
             android:parentActivityName=".OrderActivity" />
-        <activity android:name=".BillCollection" />
-        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".BillCollection"
+            android:label="Bill Collection"
+            android:parentActivityName=".Option"/>
+
+        <activity android:name=".PaymentActivity"
+            android:label = "Payment"
+            android:parentActivityName=".BillCollection"/>
+
     </application>
 
 </manifest>

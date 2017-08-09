@@ -52,10 +52,13 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             @Override
             public void OnClick(View view, int position) {
                 Toast.makeText(context, "You clicked :" + location.getId(), Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context, OutletActivity.class));
+
+                Intent intent = new Intent(view.getContext(), OutletActivity.class);
+                intent.putExtra("location_id", location.getId());
+                intent.putExtra("location_name", location.getName());
+                view.getContext().startActivity(intent);
             }
         });
-
 
 
         holder.location_name.setText(location.getName());
@@ -76,8 +79,6 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         public TextView location_name;
 
         public ItemClickListener itemClickListener;
-
-
 
 
         public ViewHolder(View itemView) {

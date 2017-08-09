@@ -2,6 +2,7 @@ package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +22,12 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
     Context context;
     public List<Outlet> moutletList;
     private ItemClickListener itemClickListener;
+    String name;
 
-    public OutletAdapter(Context context, List<Outlet> moutletList) {
+    public OutletAdapter(Context context, List<Outlet> moutletList,String name) {
         this.context = context;
         this.moutletList = moutletList;
+        this.name = name;
         //Log.d("Adapetr Size", "" + this.moutletList.size());
     }
 
@@ -45,8 +48,13 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
             public void OnClick(View view, int position) {
 
 
-                Intent intent = new Intent(view.getContext(),OrderActivity.class);
+                Intent intent = new Intent(view.getContext(),Option.class);
                 intent.putExtra("id",outlet.getId());
+                intent.putExtra("name",outlet.getOutletname());
+                intent.putExtra("location_name",name);
+
+
+
                 view.getContext().startActivity(intent);
 
               Toast.makeText(context, "You clicked:" + outlet.getId(), Toast.LENGTH_SHORT).show();
@@ -96,6 +104,10 @@ public class OutletAdapter extends RecyclerView.Adapter<OutletAdapter.ViewHolder
             itemClickListener.OnClick(view, (int) getItemId());
 
         }
+
+
     }
+
+
 
 }

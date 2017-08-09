@@ -25,7 +25,7 @@
     <string name="total_pay_showing_billCollection">500</string>
     <string name="total_due_showing_billCollection">500</string>
     <string name="payment_button_in_billCollection">Payment</string>
-    <string name="money_in_payment_activity">Money</string>
+    <string name="money_in_payment_activity">Paid Amount</string>
     <string name="amount_to_be_paid_hint_in_activty_payment">Amount to be paid</string>
     <string name="total_paid_in_activity_payment">Total Paid:</string>
     <string name="total_due_in_activity_payment">Total Due:</string>
@@ -35,4 +35,9 @@
     <string name="make_paymentbtn_in_apyment_activity">Make Payment</string>
     <string name="date_format_in_billView">01-08-17</string>
     <string name="amount_format_in_billView">1000</string>
+    <string name="collect_order_btn_in_option">Collect Order</string>
+    <string name="bill_collection_in_option">Bill Collection</string>
+    <string name="order_collection_in_option_activity">Order Collection</string>
+    <string name="bill_collection_in_option_activity">Bill Collection</string>
+    <string name="total_bill_in_payment_activity">Total Bill:</string>
 </resources>

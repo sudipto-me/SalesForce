@@ -30,7 +30,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight=".03">
+            android:layout_weight="3">
 
             <TextView
                 android:id="@+id/tv_sub_total"
@@ -72,7 +72,8 @@
             android:id="@+id/btn_proceed_cart"
             style="@style/AppTheme.RoundedCornerMaterialButton"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="8dp"
