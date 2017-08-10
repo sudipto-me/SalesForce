@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class Option extends AppCompatActivity {
-
-    public Button btn_order_collection,btn_bill_collection;
+    public Button btn_order_collection, btn_bill_collection;
     Context context;
     Bundle extra;
-    int outlet_id;
+    int outlet_id, location_id;
     String outlet_name;
+    String location_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,102 +23,28 @@ public class Option extends AppCompatActivity {
         setContentView(R.layout.activity_option);
         setTitle("Option");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         context = this;
-
-        btn_order_collection = (Button)findViewById(R.id.btn_order_collection);
-        btn_bill_collection = (Button)findViewById(R.id.btn_bill_collection);
-
-        btn_order_collection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent orderIntent = new Intent(context,OrderActivity.class);
-                extra = getIntent().getExtras();
-                if(extra!=null){
-                    outlet_id = extra.getInt("id");
-                    outlet_name = extra.getString("name");
-
-                    orderIntent.putExtra("id",outlet_id);
-                }
-                startActivity(orderIntent);
-            }
-        });
-
-        btn_bill_collection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent billIntent = new Intent(context,BillCollection.class);
-
-                extra =getIntent().getExtras();
-                if(extra!=null){
-
-                    outlet_id = extra.getInt("id");
-                    outlet_name = extra.getString("name");
-                    int location_id = extra.getInt("location_id");
-                    String location_name = extra.getString("location_name");
-
-                    Log.d("Newid",String.valueOf(outlet_id));
-                    Log.d("Another",String.valueOf(location_id));
-                    Toast.makeText(context,"Outlet name "+outlet_name+"Location_name"+location_name,Toast.LENGTH_LONG).show();
-
-                    billIntent.putExtra("id",outlet_id);
-                    billIntent.putExtra("name",outlet_name);
-                    billIntent.putExtra("location_name",location_name);
-                    startActivity(billIntent);
-                }
-
-
-            }
-        });
+        btn_order_collection = (Button) findViewById(R.id.btn_order_collection);
+        btn_bill_collection = (Button) findViewById(R.id.btn_bill_collection);
+        extra = getIntent().getExtras();
+        if (extra != null) {
+            outlet_id = extra.getInt("id");
+            outlet_name = extra.getString("name");
+            location_id = extra.getInt("location_id");
+            location_name = extra.getString("location_name");
+        } else {
+            finish();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        btn_bill_collection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent billIntent = new Intent(context,BillCollection.class);
-
-                extra =getIntent().getExtras();
-                if(extra!=null){
-
-                    outlet_id = extra.getInt("id");
-                    outlet_name = extra.getString("name");
-                    int location_id = extra.getInt("location_id");
-                    String location_name = extra.getString("location_name");
-
-                    Log.d("Newid",String.valueOf(outlet_id));
-                    Log.d("Another",String.valueOf(location_id));
-                    Toast.makeText(context,"Outlet name "+outlet_name+"Location_name"+location_name,Toast.LENGTH_LONG).show();
-
-                    billIntent.putExtra("id",outlet_id);
-                    billIntent.putExtra("name",outlet_name);
-                    billIntent.putExtra("location_name",location_name);
-                    startActivity(billIntent);
-                }
-
-
-            }
-        });
-
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
         btn_order_collection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent orderIntent = new Intent(context,OrderActivity.class);
-                extra = getIntent().getExtras();
-                if(extra!=null){
-                    outlet_id = extra.getInt("id");
-                    outlet_name = extra.getString("name");
-
-                    orderIntent.putExtra("id",outlet_id);
-                }
+                Intent orderIntent = new Intent(context, OrderActivity.class);
+                orderIntent.putExtra("id", outlet_id);
                 startActivity(orderIntent);
             }
         });
@@ -126,29 +52,18 @@ public class Option extends AppCompatActivity {
         btn_bill_collection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent billIntent = new Intent(context,BillCollection.class);
-
-                extra =getIntent().getExtras();
-                if(extra!=null){
-
-                    outlet_id = extra.getInt("id");
-                    outlet_name = extra.getString("name");
-                    int location_id = extra.getInt("location_id");
-                    String location_name = extra.getString("location_name");
-
-                    Log.d("Newid",String.valueOf(outlet_id));
-                    Log.d("Another",String.valueOf(location_id));
-                    Toast.makeText(context,"Outlet name "+outlet_name+"Location_name"+location_name,Toast.LENGTH_LONG).show();
-
-                    billIntent.putExtra("id",outlet_id);
-                    billIntent.putExtra("name",outlet_name);
-                    billIntent.putExtra("location_name",location_name);
-                    startActivity(billIntent);
-                }
-
-
+                Intent billIntent = new Intent(context, BillCollection.class);
+                Log.d("Newid", String.valueOf(outlet_id));
+                Log.d("Another", String.valueOf(location_id));
+                Toast.makeText(context, "Outlet name " + outlet_name + "Location_name" + location_name, Toast.LENGTH_LONG).show();
+                billIntent.putExtra("id", outlet_id);
+                billIntent.putExtra("name", outlet_name);
+                billIntent.putExtra("location_id", location_id);
+                billIntent.putExtra("location_name", location_name);
+                startActivity(billIntent);
             }
         });
 
     }
+
 }

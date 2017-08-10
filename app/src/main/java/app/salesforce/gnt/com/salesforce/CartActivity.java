@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -66,10 +64,12 @@ public class CartActivity extends AppCompatActivity {
         //getting outlet id
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            position = extras.getInt("Outletid");
+            position = extras.getInt("outlet_id");
 
             Log.d("newOutlet", String.valueOf(position));
         }
+        else
+            finish();
 
     }
 
@@ -193,11 +193,10 @@ public class CartActivity extends AppCompatActivity {
                             Log.d("Cart", "" + response);
                             if (res == 0) {
                                 String msg = jsonObject.getString("message");
-                                Toast.makeText(CartActivity.this, "MSG: " + msg, Toast.LENGTH_LONG).show();
+
                             }
 
-                            // String msg = jsonObject.getString("message");
-                            //Toast.makeText(context, msg.toString(), Toast.LENGTH_LONG).show();
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

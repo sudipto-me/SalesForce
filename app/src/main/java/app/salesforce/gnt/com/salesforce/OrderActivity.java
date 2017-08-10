@@ -2,10 +2,7 @@ package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class OrderActivity extends AppCompatActivity {
     Context context;
@@ -34,15 +31,11 @@ public class OrderActivity extends AppCompatActivity {
     OrderAdapter myAdapter;
     public static ArrayList<Product> products = new ArrayList<>();
     ArrayList<Outlet> outlets, clickedOutlet;
-    public static final String KEY_ID = "product_id";
-    public static final String KEY_NAME = "product_name";
     Product product;
-    Outlet outlet;
     int id;
     MyDB db;
     LinearLayoutManager linearLayoutManager;
     int position;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +53,6 @@ public class OrderActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -72,15 +64,12 @@ public class OrderActivity extends AppCompatActivity {
         if (!(products.size() > 0)) {
             sendRequestforProducts();
 
-
         } else {
             recyclerView.setAdapter(myAdapter);
             myAdapter.notifyDataSetChanged();
         }
 
         Log.d("Error log", toString());
-
-
         btn_showCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,8 +81,6 @@ public class OrderActivity extends AppCompatActivity {
                     Log.d("Product ids", " = " + p.id);
                     Log.d("Products quantity", "=" + p.quantity);
                     Log.d("Products Price", "=" + (p.price * p.quantity));
-
-
                 }
 
                 Intent cartIntent = new Intent(context, CartActivity.class);
@@ -102,9 +89,10 @@ public class OrderActivity extends AppCompatActivity {
                 if (extras != null) {
                     position = extras.getInt("id");
 
-                    cartIntent.putExtra("Outletid", position);
+                    cartIntent.putExtra("outlet_id", position);
                     Log.d("outletid", String.valueOf(position));
-                }
+                } else
+                    finish();
                 startActivity(cartIntent);
 
             }
@@ -115,8 +103,8 @@ public class OrderActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-    }
 
+    }
 
     @Override
     protected void onResume() {
@@ -172,8 +160,6 @@ public class OrderActivity extends AppCompatActivity {
 
                                 Log.d("Message", String.valueOf(product.id));
                                 Log.d("Price", String.valueOf(product.price));
-
-
                             }
 
                         } catch (Exception e) {
@@ -188,58 +174,11 @@ public class OrderActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(OrderActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         });
 
-
         queue.add(jsonArrayRequest);
-
-
     }
-
-
 }
-
-/*
-
- @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("Restart Called", toString());
-        Cursor cursor = db.getProducts();
-        db.DataChecking(position);
-        if (cursor.moveToFirst()) {
-            Log.d("Found", "Got Value");
-        } else {
-            Log.d("Empty", toString());
-        }
-
-    }
-        //cursor = db.getProducts();
-//        Cursor newProduycts = db.getProducts();
-//        if (newProduycts.moveToFirst()){
-//            //Log.d("Value",String.valueOf(db.getProducts()));
-//            db.DataChecking(position);
-//            //Log.d("Value",String.valueOf(newProduycts.getString(newProduycts.getColumnIndex("out_id"))));
-//        }
-//        newProduycts.close();
-
-//        if (newProduycts.getColumnCount()>0){
-//                while (newProduycts.moveToNext()){
-//
-//                    Log.d("Value", String.valueOf(newProduycts));
-//
-//
-//
-//                }
-//                cursor.close();
-//        }
-
-
-//            String log = "Out_id:"+newProduycts.getColumnIndex("out_id")+" ,Product id"+newProduycts.getColumnIndex("product_id")+" ,Product Quantity"+newProduycts.getColumnIndex("product_quantity")
-//                    +" ,Product Price"+newProduycts.getColumnIndex("product_price");
-//
-//            Log.d("Value",log);
- */
 

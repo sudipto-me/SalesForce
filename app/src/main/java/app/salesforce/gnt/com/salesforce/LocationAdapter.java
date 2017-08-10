@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,16 +50,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
-                Toast.makeText(context, "You clicked :" + location.getId(), Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(view.getContext(), OutletActivity.class);
                 intent.putExtra("location_id", location.getId());
                 intent.putExtra("location_name", location.getName());
                 view.getContext().startActivity(intent);
             }
         });
-
-
         holder.location_name.setText(location.getName());
 
     }
@@ -74,19 +69,12 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-
         public TextView location_name;
-
         public ItemClickListener itemClickListener;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-
             location_name = (TextView) itemView.findViewById(R.id.tv_location_name);
-
             itemView.setOnClickListener(this);
         }
 
@@ -94,12 +82,9 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             this.itemClickListener = itemClickListener;
         }
 
-
         @Override
         public void onClick(View view) {
-
             itemClickListener.OnClick(view, (int) getItemId());
-
         }
     }
 }

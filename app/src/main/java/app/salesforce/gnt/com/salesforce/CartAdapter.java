@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
+
 
 /**
  * Created by PC-05 on 6/1/2017.
@@ -36,7 +36,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Product cart = mCartList.get(position);
-        //holder.tv_productId.setText(String.valueOf(cart.getId()));
+
         holder.tv_productName.setText(cart.getName());
         holder.tv_quantity.setText(String.valueOf(cart.getQuantity()));
         holder.tv_price.setText(String.valueOf(cart.getPrice()));
@@ -50,16 +50,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tv_productId, tv_productName, tv_ProductQuantity, tv_quantity, tv_product_price, tv_price, tv_taka;
+        public TextView  tv_productName, tv_ProductQuantity, tv_quantity, tv_product_price, tv_price, tv_taka;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            //tv_productId = (TextView)itemView.findViewById(R.id.tv_Product_ID);
             tv_productName = (TextView) itemView.findViewById(R.id.tv_product_name);
             tv_ProductQuantity = (TextView) itemView.findViewById(R.id.tv_Product_Quantity);
             tv_quantity = (TextView) itemView.findViewById(R.id.tv_Quanitity);
-            //tv_product_price = (TextView)itemView.findViewById(R.id.tv_Product_Price);
             tv_price = (TextView) itemView.findViewById(R.id.tv_Price);
 
         }

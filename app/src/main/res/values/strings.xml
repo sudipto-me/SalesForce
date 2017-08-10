@@ -34,7 +34,7 @@
     <string name="outlet_area_in_payment_activity">Outlet Area:</string>
     <string name="make_paymentbtn_in_apyment_activity">Make Payment</string>
     <string name="date_format_in_billView">01-08-17</string>
-    <string name="amount_format_in_billView">1000</string>
+    <string name="amount_format_in_billView">1000 Taka</string>
     <string name="collect_order_btn_in_option">Collect Order</string>
     <string name="bill_collection_in_option">Bill Collection</string>
     <string name="order_collection_in_option_activity">Order Collection</string>

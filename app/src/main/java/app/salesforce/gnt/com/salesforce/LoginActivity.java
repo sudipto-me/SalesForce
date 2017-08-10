@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         db = new MyDB(this);
         Cursor cursor = db.getData();
         if (cursor.moveToFirst()) {
-            Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
+           // Toast.makeText(LoginActivity.this, "GET DATA FROM DB" + cursor.getString(1), Toast.LENGTH_LONG).show();
 
 
             startActivity(new Intent(LoginActivity.this, LocationActivity.class));

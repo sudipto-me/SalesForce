@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class OutletActivity extends AppCompatActivity {
-
     RecyclerView recyclerView;
     OutletAdapter myOutletAdapter;
     public static ArrayList<Outlet> mOutletList = new ArrayList<>();
@@ -39,15 +38,12 @@ public class OutletActivity extends AppCompatActivity {
     String location_name;
     int location_id;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outlet);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         context = this;
-
         recyclerView = (RecyclerView) findViewById(R.id.rv_outlet_name);
 
     }
@@ -61,18 +57,15 @@ public class OutletActivity extends AppCompatActivity {
         mlinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mOutletList.clear();
         sendRequestForOutlet();
-
         extra = getIntent().getExtras();
         if (extra != null) {
             location_id = extra.getInt("location_id");
             location_name = extra.getString("location_name");
-
-
             Log.d("Location id", String.valueOf(location_id));
             Log.d("Location Name", location_name);
+        } else {
+            finish();
         }
-
-
         recyclerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,15 +74,12 @@ public class OutletActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mOutletList.clear();
-        //sendRequestForOutlet();
-
 
     }
 
@@ -97,58 +87,44 @@ public class OutletActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         String outlet_url = "http://inbackoffice.com/app/inforce/outlet.php";
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, outlet_url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.d("Result",""+ response);
-                        // Toast.makeText(context, "Response" + response, Toast.LENGTH_LONG).show();
-
+                        Log.d("Result", "" + response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             int res = jsonObject.getInt("success");
                             if (res == 0) {
                                 return;
                             }
-
-
                             String message = jsonObject.getString("message");
                             JSONArray jsonArray = jsonObject.getJSONArray("outlet_name");
                             for (int i = 0; i < jsonArray.length(); i++) {
 
                                 JSONObject jobj = jsonArray.getJSONObject(i);
-
                                 outlet = new Outlet();
-
-
                                 if (!jobj.isNull("outlet_id")) {
 
                                     outlet.id = jobj.getInt("outlet_id");
                                 }
-
                                 if (!jobj.isNull("outlet_name")) {
                                     outlet.outletname = jobj.getString("outlet_name");
                                 }
                                 mOutletList.add(i, outlet);
-
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        myOutletAdapter = new OutletAdapter(OutletActivity.this, mOutletList, location_name);
+                        myOutletAdapter = new OutletAdapter(OutletActivity.this, mOutletList, location_name, location_id);
                         recyclerView.setAdapter(myOutletAdapter);
                         myOutletAdapter.notifyDataSetChanged();
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }) {
 

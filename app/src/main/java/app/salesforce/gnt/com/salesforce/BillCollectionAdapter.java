@@ -23,7 +23,6 @@ public class BillCollectionAdapter extends RecyclerView.Adapter<BillCollectionAd
         this.mbillFormats = mbillFormats;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.billview, parent, false);
@@ -33,11 +32,9 @@ public class BillCollectionAdapter extends RecyclerView.Adapter<BillCollectionAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         final BillFormat billFormat = mbillFormats.get(position);
-
         holder.tv_date.setText(billFormat.getDate());
-        holder.tv_amount.setText(String.valueOf(billFormat.getAmount()));
+        holder.tv_amount.setText(String.valueOf(billFormat.getAmount()) + " Taka");
 
     }
 
@@ -48,7 +45,7 @@ public class BillCollectionAdapter extends RecyclerView.Adapter<BillCollectionAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_date, tv_amount,tv_billID;
+        public TextView tv_date, tv_amount;
 
         public ViewHolder(View itemView) {
             super(itemView);
