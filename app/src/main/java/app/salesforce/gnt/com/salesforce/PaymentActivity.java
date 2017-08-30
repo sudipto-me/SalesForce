@@ -1,6 +1,7 @@
 package app.salesforce.gnt.com.salesforce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -51,6 +52,8 @@ public class PaymentActivity extends AppCompatActivity {
     int agent;
     int paidmoney;
     Context context;
+    int outlet_id;
+    String outlet_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class PaymentActivity extends AppCompatActivity {
         extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id");
+            Log.d("Activity",String.valueOf(id));
             name = extras.getString("name");
             location_name = extras.getString("location_name");
             total_due = extras.getInt("due");
@@ -87,7 +91,7 @@ public class PaymentActivity extends AppCompatActivity {
         tv_outlet_id.setText("Outlet Id: " + id);
         tv_outlet_name.setText("Outlet Name:" + name);
         tv_outlet_area.setText("Location Name:" + location_name);
-        tv_total_bill.setText("Total Due: " + String.valueOf(total_due) + " Taka");
+        tv_total_bill.setText("Total Bill: " + String.valueOf(total_due) + " Taka");
         tv_total_pay.setText("Total Pay:0" + " Taka");
         tv_total_due.setText("Total Due" + String.valueOf(total_due) + " Taka");
         Log.d("Total", "Payment" + String.valueOf(total_due));
@@ -106,6 +110,12 @@ public class PaymentActivity extends AppCompatActivity {
                 sendpayment();
                 tv_total_pay.setText("Total Paid Amount:" + paidmoney + " Taka");
                 tv_total_due.setText("Total Due:" + String.valueOf(due) + " Taka");
+
+                Intent paymentIntent = new Intent(context, PaymentHistory.class);
+                //Toast.makeText(context, "Id is:" + outlet_id + "Name is:" + outlet_name, Toast.LENGTH_LONG).show();
+                paymentIntent.putExtra("outlet_id", id);
+
+                startActivity(paymentIntent);
             }
         });
     }

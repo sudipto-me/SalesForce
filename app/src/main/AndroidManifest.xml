@@ -38,9 +38,10 @@
             android:name=".OutletActivity"
             android:label="Outlet"
             android:parentActivityName=".LocationActivity" />
-        <activity android:name=".Option"
+        <activity
+            android:name=".Option"
             android:label="Option"
-            android:parentActivityName=".OutletActivity"/>
+            android:parentActivityName=".OutletActivity" />
         <activity
             android:name=".OrderActivity"
             android:label="Order"
@@ -49,14 +50,15 @@
             android:name=".CartActivity"
             android:label="Cart"
             android:parentActivityName=".OrderActivity" />
-        <activity android:name=".BillCollection"
+        <activity
+            android:name=".BillCollection"
             android:label="Bill Collection"
-            android:parentActivityName=".Option"/>
-
-        <activity android:name=".PaymentActivity"
-            android:label = "Payment"
-            android:parentActivityName=".BillCollection"/>
-
+            android:parentActivityName=".Option" />
+        <activity
+            android:name=".PaymentActivity"
+            android:label="Payment"
+            android:parentActivityName=".BillCollection" />
+        <activity android:name=".PaymentHistory"></activity>
     </application>
 
 </manifest>

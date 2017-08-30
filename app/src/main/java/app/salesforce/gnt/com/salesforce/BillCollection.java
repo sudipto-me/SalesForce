@@ -169,4 +169,7 @@ public class BillCollection extends AppCompatActivity {
         tv_pay.setText(String.valueOf("0") + " Taka");
         tv_due.setText(String.valueOf(total) + " Taka");
     }
+
+
+
 }
